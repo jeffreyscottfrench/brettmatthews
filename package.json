@@ -1,14 +1,14 @@
 {
-  "name": "Jumpstart",
-  "version": "1.0.0",
-  "description": "Quickly get started on a new project",
+  "name": "BrettMatthewsPhotography",
+  "version": "3.0.0",
+  "description": "Portfolio website for Brett Matthews Photography",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeffreyscottfrench/jumpstart.git"
+    "url": "git+https://github.com/jeffreyscottfrench/brettmatthews.git"
   },
   "bugs": {
-    "url": "https://github.com/jeffreyscottfrench/jumpstart/issues"
+    "url": "https://github.com/jeffreyscottfrench/brettmatthews/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
