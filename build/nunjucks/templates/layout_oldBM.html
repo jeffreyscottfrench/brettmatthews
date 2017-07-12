@@ -1,0 +1,125 @@
+<?php
+header('Content-Type: text/html; charset=utf-8');
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Brett Matthews Photography</title>
+
+  <meta name="robots" content="index,follow">
+  <meta name="classification" content="Business">
+  <meta name="description" content="New York based photo studio Brett Matthews Photography is a wedding and event photography studio serving Manhattan, The New York City metro area, and destination locations worldwide.">
+  <meta name="keywords" content="new york city wedding photos, town and country wedding photos, country club wedding photos, boutique wedding photos, castle wedding photos, estate wedding photos, beach wedding photos, engagement photos, destination wedding photos, vineyard wedding photos, brooklyn wedding photos">
+  <meta name="copyright" content="Brett Matthews Photography">
+  <meta name="distribution" content="Global">
+  <meta name="rating" content="General">
+  <meta name="language" content="en-us">
+
+
+	<!--build:css css/brettmatthews2017-03.min.css-->
+  <link href="css/brettmatthews2017-03.css" rel="stylesheet" type="text/css">
+  <!-- endbuild -->
+{% block headinsert %}{% endblock %}
+</head>
+
+<body>
+<div class="super-container" id="top">
+
+{% include partials/menu.njk %}
+
+{% block content %}{% endblock %}
+
+  <!-- include'menu-footer-2016.php' ?> -->
+  <nav class="menu bottom-menu" id="bottom-menu-mobile">
+
+      <div class="nav bottom-nav mobile-nav clearfix">
+          <div class="social">
+            <div class="fb-like" data-href="https://www.facebook.com/BrettMatthewsPhotography" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false">
+            </div>
+            <div class="addthis-container">
+              <!-- AddThis Follow BEGIN -->
+              <div class="addthis_horizontal_follow_toolbox"></div>
+              <!-- AddThis Follow END -->
+            </div>
+          </div>
+      </div>
+
+  </nav>
+
+  <div class="footer">
+    <div id="footertext">Brett Matthews Photography | 224 Fifth Avenue NYC | 212-337-0111</div>
+  </div>
+
+</div><!-- close super-container -->
+
+<!-- Start of StickyMenu Code -->
+<script type="text/javascript">
+// set everything outside the onscroll event (less work per scroll)
+var menu      = document.getElementById("top-menu-mobile"),
+// -0 means only positive movement
+stop      = menu.offsetTop - 0,
+docBody   = document.documentElement || document.body.parentNode || document.body,
+hasOffset = window.pageYOffset !== undefined,
+scrollTop;
+
+window.onscroll = function (e) {
+// cross-browser compatible scrollTop.
+scrollTop = hasOffset ? window.pageYOffset : docBody.scrollTop;
+
+  // if user scrolls
+  if (scrollTop >= stop) {
+  // stick the div
+  menu.className = 'stick';
+  } else {
+  // release the div
+  menu.className = '';
+  }
+}
+</script>
+<!-- End of StickyMenu Code -->
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=6591897;
+var sc_invisible=1;
+var sc_security="864078db";
+</script>
+
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js"></script><noscript></noscript>
+<!-- End of StatCounter Code -->
+
+<!-- Start of Google Analytics Code -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8755644-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- End of Google Analytics Code -->
+
+<!-- Start of Facebook Like Button Code -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- End of Facebook Like Button Code -->
+
+<!-- Start of AddThis Code -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529cd90519383f25" async="async"></script>
+<!-- End of AddThis Code -->
+    <!-- end include footer-menu.php -->
+
+</body>
+</html>
