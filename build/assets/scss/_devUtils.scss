@@ -1,0 +1,7 @@
+// Development aides.
+@mixin spotlight() {
+  background-color: rgba(200,0,0,.2);
+}
+@mixin devBorder($value: pink) {
+  border: 1px dashed $value;
+}

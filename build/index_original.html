@@ -41,7 +41,7 @@
     <!--build:css assets/css/styles.min.css-->
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css">
     <!--endbuild-->
-{% block headinsert %}{% endblock %}
+
   </head>
 
 <body>
@@ -51,22 +51,51 @@
 <div class="super-container">
 
   <header class="wrapper clearfix">
-    {% include "partials/menu_logo.njk" %}
-    {% include "partials/menu.njk" %}
-    {% include "partials/menu_blog_link.njk" %}
+    <div class="container-headerLogo">
+      <a class="" href="http://brettmatthews.com"><img class="logo-bm" src="images/Name_BM_40gray_blocked.svg" alt="Brett Matthews Photography Logo" title="Brett Matthews Photography"></a>
+    </div>
+    <nav class="menu top-menu nav top-nav clearfix">
+      <a id="menu_weddings" class="nav-item" href="http://brettmatthews.com/site/weddings/portfolio.php">Weddings</a>
+      <a id="menu_engaged" class="nav-item" href="http://brettmatthews.com/site/engaged/index.php">Engaged</a>
+      <a id="menu_mitzvahs" class="nav-item" href="http://brettmatthews.com/site/mitzvahs/index.php">Mitzvahs</a>
+      <a id="menu_about" class="hidden nav-item" href="http://brettmatthews.com/site/about.php">About</a>
+      <a id="menu_contact" class="nav-item" href="http://brettmatthews.com/site/contact.php">Contact</a>
+      <a id="menu_client_galleries" class="nav-item" href="http://brettmatthews.com/site/client-galleries.php">Client Galleries</a>
+    </nav>
+    <a class="container-blogLink" href="http://blog.brettmatthews.com" target="bm-blog"><img src="images/Logo_PhotographyBlog.svg" /></a>
     <div class="line">
     </div>
   </header>
 
 
-  <div class="container main content {{ content_special_class }} wrapper">
-{% block content %}{% endblock %}
+  <div class="container main content  wrapper">
+
+<section class="container-section">
+  <h1>
+    Brett Matthews Photography
+  </h1>
+  <p>
+    Brett Matthews Photography is... Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  <p>
+    Founded by ... Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  <p>
+    More info on Brett Matthews Photography - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+</section>
+
   </div><!-- end content -->
 
 
   <footer class="wrapper clearfix">
     <div class="footerBusinessInfo"><span class="text">Brett Matthews Photography</span><span class="dividerLine"> | </span><span class="text">224 Fifth Avenue NYC</span><span class="dividerLine"> | </span><span class="text">212-337-0111</span></div>
-    {% include "partials/social-follow.njk" %}
+    <div class="container-social social">
+      <div id="fboverlay" class="fb-like" data-href="https://www.facebook.com/BrettMatthewsPhotography" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+      <a class="social-facebook" href="http://www.facebook.com/BrettMatthewsPhotography" target="new">&#xe804;</a>
+      <a class="social-twitter" href="http://brettmatthews.com/site/contact.html">&#xe802;</a>
+      <a class="social-instagram" href="http://instagram.com/BrettMatthewsPhotography" target="new">&#xe805;</a>
+    </div>
     <div class="copyright">
       &copy; 2017 Brett Matthews Photography
     </div>
