@@ -1,0 +1,10 @@
+{% extends "layout.njk" %}
+
+{% set content_special_class %}contact error-page{% endset %}
+
+{% block content %}
+    <section class="form-submissionError">
+      <h3>Woops, something went wrong!</h3>
+      <div>You may have left a required field blank by accident. Please go back and try your submission again by using your browser's back button, or by <a href="contact.php">clicking here</a>.</div>
+    </section>
+{% endblock %}

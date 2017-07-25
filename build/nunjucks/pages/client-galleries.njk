@@ -1,0 +1,17 @@
+{% extends "layout.njk" %}
+
+{% set content_special_class %}client-galleries{% endset %}
+
+{% block content %}
+    <section class="login">
+        <script type="text/javascript">var _cb = parseInt(Math.random() * 99999999);document.write('<sc' + 'ript type="text/javascript" src="https://BrettMatthews.shootproof.com/remote/chooser?events=0&email=1&language=en_US&cb=' + _cb + '"></sc' + 'ript>');</script>
+    </section>
+    <section class="login-background image-home">
+      <a class="image-link">
+        {% set image_path="http://localhost:7000/images/weddings/nyc-wedding-party-street" %}
+          <img alt="A Bride and Groom and their wedding party walking arm in arm on a New York City Street"
+            {% include "partials/ri-full-width.njk" %}>
+
+      </a>
+    </section>
+{% endblock %}

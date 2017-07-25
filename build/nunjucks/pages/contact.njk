@@ -1,0 +1,70 @@
+{% extends "layout.njk" %}
+
+{% set content_special_class %}contact{% endset %}
+
+{% block content %}
+    <section>
+      <div class="form-header"><div>WE WOULD LOVE TO HEAR FROM YOU!</div>Send us your information using the form below and we'll get back to you right away!
+      </div>
+      <form name="form1" id="form1" method="post" action="mail3.php">
+        <input name="name" type="text" class="required" placeholder="* Your Name"/>
+        <input name="email" type="text" class="required" placeholder="* Your Email Address"/>
+        <input name="Main_phone" type="text" class="required" placeholder="* Phone Number" />
+        <input name="date" type="text" placeholder="Event Date" />
+        <input name="location" type="text" placeholder="Event Location" />
+        <div class="styled-select">
+          <select name="event_type">
+            <option value="Did_not_specify">Event Type (Please Select)</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Anniversary Party">Anniversary Party</option>
+            <option value="Birthday Party">Birthday Party</option>
+            <option value="Bat Mitzvah">Bat Mitzvah</option>
+            <option value="Bar Mitzvah">Bar Mitzvah</option>
+            <option value="Sweet Sixteen">Sweet Sixteen</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="styled-checkbox">
+          <div class="form-text">Preferred contact method:</div>
+          <div class="checkbox">
+             <input type="checkbox" id="contact-via-email" class="checkbox-box" name="contact-via-email" />
+             <label for="contact-via-email" class="checkbox-label">email</label>
+          </div>
+          <span>and/or</span>
+          <div class="checkbox">
+              <input type="checkbox" id="contact-via-phone" class="checkbox-box" name="contact-via-phone" />
+              <label for="contact-via-phone" class="checkbox-label">phone</label>
+          </div>
+        </div>
+        <textarea name="comments" class="comment-box" rows="2" placeholder="How did you hear about us?"></textarea>
+        <input name="recipient" type="hidden" value="info@brettmatthews.com" />
+        <input name="subject" type="hidden" value="Contact Form from BrettMatthews.com" />
+        <input name="recipient2" type="hidden" value="leads@brettmatthews.com" />
+        <input name="subject2" type="hidden" value="Leads from BrettMatthews.com" />
+        <input name="errorpage" type="hidden" value="http://www.brettmatthews.com/site/contact-error.php" />
+        <input name="redirect" type="hidden" value="http://www.brettmatthews.com/site/contact-thanks.php" />
+        <div class="required-key"><div>* Indicates required</div></div>
+        <input id="submit-button" name="Submit" type="submit" value="Submit" />
+      </form>
+    </section><!-- close container-contact-left -->
+
+    <section>
+      <ul>
+        <li><h4>LOCATION</h4></li>
+        <li class="margin-wrap"><span class="text">224 Fifth Avenue, 2nd Floor,</span> <span class="text">New York, NY 10001</span></li>
+        <li>Fifth Ave between 26th St &amp; 27th St</li>
+        <li class="tight">Subway: 6 F M N R</li>
+        <li class="tight"><a href="https://goo.gl/maps/9EbaCnW6S272" target="_blank">Open in Google Maps</a></li>
+      </ul>
+      <ul>
+        <li><h4>HOURS</h4></li>
+        <li>Mon: 10 - 6 (6 - 9 by appointment)</li>
+        <li class="tight">Tue: 10 - 6 (6 - 9 by appointment)</li>
+        <li class="tight">Wed: 10 - 9</li>
+        <li class="tight">Thu: 10 - 9</li>
+        <li class="tight">Fri: 10 - 6</li>
+        <li class="tight">Sat: Closed</li>
+        <li class="tight">Sun: Closed</li>
+      </ul>
+    </section><!-- close container-contact-right -->
+{% endblock %}

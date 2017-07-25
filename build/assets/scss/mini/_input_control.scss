@@ -318,7 +318,7 @@ button, [type="button"], [type="submit"], [type="reset"],
 a.#{$button-class-name}, label.#{$button-class-name}, .#{$button-class-name},
 a[role="button"], label[role="button"], [role="button"] {
   display: inline-block;
-  background: rgba($button-back-color, $button-back-opacity);
+  background-color: rgba($button-back-color, $button-back-opacity);
   color: $button-fore-color;
   border: $button-border-style;
   @if $button-border-radius != 0 {
@@ -339,7 +339,7 @@ a[role="button"], label[role="button"], [role="button"] {
   transition: background 0.3s;
   cursor: pointer;
   &:hover, &:focus {
-    background: rgba($button-back-color, $button-hover-back-opacity);
+    background-color: rgba($button-back-color, $button-hover-back-opacity);
     @if $apply-link-hover-fade {  // Override for links if hover-fade is enabled.
       opacity: 1;
     }
@@ -363,7 +363,7 @@ a[role="button"], label[role="button"], [role="button"] {
 }
 @if $style-link-active-state {
   a.#{$button-class-name}:active, a[role="button"]:active {
-    background: rgba($button-back-color, $button-hover-back-opacity);
+    background-color: rgba($button-back-color, $button-hover-back-opacity);
     @if $apply-link-hover-fade {  // Override for links if hover-fade is enabled.
       opacity: 1;
     }

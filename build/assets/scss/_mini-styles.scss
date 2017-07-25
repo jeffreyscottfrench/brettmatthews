@@ -31,7 +31,7 @@ $h4-font-size:          1.1875rem;  // Font size for h4
 $h5-font-size:          1rem;  // Font size for h5
 $h6-font-size:          0.8125rem;  // Font size for h6
 $heading-line-height:   1.2em;  // Line height for all headings
-$heading-margin:        0.75rem 0.5rem;  // Margin for all headings
+$heading-margin:        0.75rem 0;  // Margin for all headings
 $heading-font-weight:   500;  // Font weight for all headings
 $heading-smalltext-fore-color:  #424242;  // <small> color in headings
 $make-heading-smalltext-block:  true;  // Should <small> elements in headings be displayed as blocks (`true`/`false`) [4]
@@ -132,7 +132,7 @@ $figcaption-fore-color:    #424242;  // Text color for <figcaption> elements
 $use-four-step-grid:           false;  // Should the old 4-step grid system be used instead of the new (`true`/`false`) [1]
 $include-parent-layout:        true;  // Should the classes for rows defining the column layout of children be included (`true`/`false`) [2]
 $grid-container-name:          'container';  // Class name for the grid container
-$grid-container-side-padding:  0.75rem;  // Padding for the grid container (left and right only)
+$grid-container-side-padding:  0;  // Padding for the grid container (left and right only)
 $grid-row-name:                'row';  // Class name for the grid's rows
 $grid-row-parent-layout-prefix:'cols';  // Class name prefix for the grid's row parents [2]
 $grid-column-prefix:           'col';  // Class name prefix for the grid's columns
@@ -154,18 +154,18 @@ $grid-large-prefix:            'lg';  // Large screen class prefix for grid
 //  layout of their children. In this case, a value should be specified for $grid-row-parent-layout-prefix.
 
 //  Variables for forms and inputs
-$form-back-color:        #eeeeee;  // Background color for forms
+$form-back-color:        $back-color;  // Background color for forms
 $form-fore-color:        $fore-color;  // Text color for forms
-$form-border-style:      $_1px solid #c9c9c9;  // Border style for forms
+$form-border-style:      0;  // Border style for forms
 $form-border-radius:     0;  // Border radius for forms
-$form-margin:            0.5rem;  // Margin for forms
-$form-padding:           0.75rem 0.5rem 1.125rem;  // Padding for forms
+$form-margin:            0;  // Margin for forms
+$form-padding:           0;  // Padding for forms
 $form-box-shadow:        none;  // Box shadow for forms
 $fieldset-back-color:    $form-back-color;  // Background color for fieldset
-$fieldset-border-style:  $_1px solid #d0d0d0;  // Border style for fieldset
-$fieldset-border-radius: 2*$_1px;  // Border radius for fieldset
-$fieldset-margin:        0.125rem;  // Margin for fieldset
-$fieldset-padding:       0.5rem;  // Padding for fieldset
+$fieldset-border-style:  $border-inputs;  // Border style for fieldset
+$fieldset-border-radius: 0;  // Border radius for fieldset
+$fieldset-margin:        1.25rem auto 0;;  // Margin for fieldset
+$fieldset-padding:       0 0.5rem;  // Padding for fieldset
 $legend-font-weight:     $bold-font-weight;  // Font weight for legend
 $legend-font-size:       0.875rem;  // Font size for legend
 $legend-fore-color:      $form-fore-color;  // Text color for legend
@@ -177,32 +177,32 @@ $input-group-fluid-name:'fluid';  // Class name for fluid input groups
 $include-vertical-input-group:  true;  // Should vertical input groups be included? (`true`/`false`) [1]
 $input-group-vertical-name:   'vertical';  // Class name for vertical input groups.
 $input-group-mobile-breakpoint:  767px;  // Breakpoint for fluid input group mobile view
-$input-back-color:      #fafafa;  // Background for input
+$input-back-color:      $back-color;  // Background for input
 $input-fore-color:      $fore-color;  // Text color for input
-$input-border-style:    $_1px solid #c9c9c9;  // Border style for input
-$input-border-radius:   2*$_1px;  // Border radius for input
-$input-margin:          0.25rem;  // Margin for input
-$input-padding:         0.5rem 0.75rem;  // Padding for input
-$input-focus-border-color:    #0288d1;  // Border color for focused input
-$input-invalid-border-color:  #d32f2f;  // Border color for invalid input
+$input-border-style:    $border-inputs;  // Border style for input
+$input-border-radius:   0;  // Border radius for input
+$input-margin:          1.25rem auto 0;  // Margin for input
+$input-padding:         0 0.5rem;  // Padding for input
+$input-focus-border-color:    $border-secondary;  // Border color for focused input
+$input-invalid-border-color:  #ff0000;  // Border color for invalid input
 $input-disabled-opacity:      0.75;  // Opacity for disabled input
 $input-readonly-back-color:   #e5e5e5;  // Background color for readonly input
 $input-readonly-border-color: #c9c9c9;  // Border color for readonly input
-$input-placeholder-fore-color:#616161;  // Text color for input placeholder
+$input-placeholder-fore-color: #e5e5e5;  // Text color for input placeholder
 $select-padding-right:        1.5rem;  // Right padding for <select> element
-$button-back-color:      #dcdcdc;  // Back color for button elements
-$button-back-opacity:    0.75;  // Background opacity for button elements
+$button-back-color:      $back-color;  // Back color for button elements
+$button-back-opacity:    1;  // Background opacity for button elements
 $button-hover-back-opacity: 1;  // Background opacity for button elements on hover or focus
 $button-fore-color:      $fore-color;  // Text color for button elements
-$button-border-style:    0;  // Border style for button elements
-$button-border-radius:   2*$_1px;  // Border radius for button elements
+$button-border-style:    $border-inputs;  // Border style for button elements
+$button-border-radius:   0;  // Border radius for button elements
 $button-padding:         0.5rem 0.75rem;  // Padding for button elements
-$button-margin:          0.5rem;  // Margin for button elements
+$button-margin:          1.25rem auto 0;;  // Margin for button elements
 $button-box-shadow:      none;  // Box shadow for buttons
 $button-disabled-opacity: 0.75;  // Disabled button elements opacity
 $button-class-name:      'button';  // Class for custom button elements
 $button-group-name:      'button-group';  // Class for button groups
-$button-group-border-style:  $_1px solid #bdbdbd;  // Border style for button groups
+$button-group-border-style:  $border-inputs;  // Border style for button groups
 $button-group-margin:    $button-margin;  // Margin for button groups
 $button-group-box-shadow:    none;  // Box shadow for button groups
 $button-group-mobile-breakpoint:767px;  // Breakpoint for button group mobile view
@@ -229,12 +229,12 @@ $button-variant4-hover-back-opacity:    1;  // Background opacity for button var
 $button-variant4-fore-color:            #fafafa;  // Text color for button variant 4
 $button-style1-name:             'small';  // Class name for button style 1
 $button-style1-border-style:     0;  // Border style for button style 1
-$button-style1-border-radius:    $_1px;  // Border radius for button style 1
+$button-style1-border-radius:    0;  // Border radius for button style 1
 $button-style1-padding:          0.25rem 0.375rem;  // Padding for button style 1
 $button-style1-margin:           0.5rem;  // Margin for button style 1
 $button-style2-name:             'large';  // Class name for button style 2
 $button-style2-border-style:     0;  // Border style for button style 2
-$button-style2-border-radius:    4*$_1px;  // Border radius for button style 2
+$button-style2-border-radius:    0;  // Border radius for button style 2
 $button-style2-padding:          0.75rem 1.125rem;  // Padding for button style 2
 $button-style2-margin:           0.5rem;  // Margin for button style 2
 $checkbox-size:                  1rem;  // Size for checkbox/radio [3]
@@ -571,7 +571,7 @@ $include-center-block-name:   false;  // Should center block be included? (`true
 // that module and marked as such below it.
 @import './node_modules/mini.css/src/mini/core';
 // @import './node_modules/mini.css/src/mini/grid';
-@import './node_modules/mini.css/src/mini/input_control';
+@import 'mini/input_control';
 /*
   Custom elements for forms and input elements.
 */

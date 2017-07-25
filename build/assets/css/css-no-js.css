@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* CSS Document */
+.hide-when-no-js {
+  display: none;
+}
+#top-menu-mobile{
+  visibility: visible;
+  position: fixed;
+}
