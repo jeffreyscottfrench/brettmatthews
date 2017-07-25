@@ -134,6 +134,8 @@ var symlink      = require('gulp-sym'); // Create a shortcut reference instead o
 var newer        = require('gulp-newer');
 var del          = require('del');
 var path         = require('path');
+var data         = require('gulp-data'); // Attach data from outside source
+var swig         = require('gulp-swig'); // Push data to other functions
 var runSequence  = require('run-sequence');
 var php          = require('gulp-connect-php'); // Serve php files locally in the build environment using browserSync.
 var browserSync  = require('browser-sync').create(); // Reloads browser and injects CSS. Time-saving synchronised browser testing.
@@ -178,11 +180,27 @@ gulp.task( 'browser-sync', function() {
 });
 
 gulp.task('nunjucks', function(){
-  return gulp.src('./build/nunjucks/pages/**/*.+(nunjucks|njk|html)')
+  return gulp.src('./build/nunjucks/pages/**/*.+(njk|html)')
   .pipe(nunjucksRender({
     path: ['./build/nunjucks/templates']
   }))
   .pipe(gulp.dest('./build'))
+});
+
+/*
+  Get data via JSON file, keyed on filename.
+*/
+var getJsonData = function(file) {
+  return require('./build/nunjucks/pages/**/' + path.basename(file.path));
+};
+
+gulp.task('json-test', function() {
+  return gulp.src('./build/nunjucks/pages/**/*.+(json|html)')
+    .pipe(data(require('./build/nunjucks/pages/**/' + path.basename(file.path))))
+    .pipe(nunjucksRender({
+      path: ['./build/nunjucks/templates']
+    }))
+    .pipe(gulp.dest('./build'));
 });
 
 

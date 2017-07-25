@@ -1,0 +1,31 @@
+<!-- city/index.html -->
+{% extends "layout.njk" %}
+
+{% block headinsert %}
+    {% include "partials/pswp_styles.njk" %}
+{% endblock %}
+
+{% set content_special_class %}gallery-page{% endset %}
+
+{% block content %}
+    <section>
+      <div class="gallery category js-pswp_gallery" id="city-weddings">
+
+        JSON DATA USED = {{ success }}
+        {# {%- import "_images.njk" as images -%}
+
+        {{ images.thmb(
+          images='38',
+          div_class='thmb-sm container-image',
+          a_href_base='new-york-city-weddings',
+          a_title='A New York City Wedding',
+          img_alt='An Image of a New York City Wedding', img_src_base='http://localhost:7000/images/city/nyc-thmb') }} #}
+
+      </div>
+    </section>
+
+    {% include "partials/pswp.njk" %}
+
+{% endblock %}
+
+{% block scripts %}{% include "partials/pswp_scripts.njk" %}{% endblock %}
