@@ -9,7 +9,7 @@
     {%- set a_href %}{{a_href_base}}-{{int}}{% endset %}
     {% set image_path %}{{img_src_base}}-{{int}}{% endset %}
         <div class="{{ div_class }}">
-          <a href="http://localhost:7000/city/{{ a_href }}.html" title="{{ a_title }}">
+          <a href="../{{ a_href }}.html" title="{{ a_title }}">
             <img alt="{{ img_alt }}"
             {% include "partials/ri-thmb.njk" %}>
           </a>
