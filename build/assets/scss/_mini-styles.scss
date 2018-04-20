@@ -328,7 +328,7 @@ $footer-border-style:      0;  // Border stye for <footer>
 $footer-font-size:         0.875rem;  // Font size for <footer>
 $footer-margin:            1rem 0 0;  // Margin for <footer>
 $footer-padding:           1.5rem 0.5rem 0.75rem;  // Padding for <footer>
-$footer-link-fore-color:   #0288d1;  // Text color for links in <footer>
+$footer-link-fore-color:   $fore-color;  // Text color for links in <footer>
 $include-footer-sticky:    true;  // Should sticky <footer> elements be included (`true`/`false`) [3]
 $footer-sticky-name:       'sticky';  // Class name for sticky <footer> elements
 //  Notes:

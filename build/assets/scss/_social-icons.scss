@@ -67,6 +67,9 @@ $font-icon: 'Entypo-subset', sans-serif; // Icon Font
     display: inline-block;
     margin: 0 5px;
     text-decoration: none;
+    &:hover {
+      color: darken($fore-color, 33%);
+    }
   }
   & a.social-mail { // fix height discrepency and alignment issue
     font-size: $base-root-font-size * 1.95;

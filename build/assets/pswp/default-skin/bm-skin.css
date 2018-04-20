@@ -13,7 +13,7 @@
 */
 
 div.pswp__bg {
-  background-color: #222222;
+  background-color: #2d2d2d;
 }
 
 /*
@@ -126,7 +126,7 @@ button.pswp__button--arrow--left:before,
 button.pswp__button--arrow--right:before {
   content: '';
   top: 35px;
-  background-color: rgba(34, 34, 34, 1);
+  background-color: rgba(45, 45, 45, 1);
   height: 30px;
   width: 32px;
   position: absolute; }
@@ -224,7 +224,7 @@ a.pswp__share--facebook:before {
   top: -12px;
   right: 15px;
   border: 6px solid transparent;
-  border-bottom-color: #222222;
+  border-bottom-color: #2d2d2d;
   -webkit-pointer-events: none;
   -moz-pointer-events: none;
   pointer-events: none; }
@@ -432,7 +432,7 @@ a.pswp__share--download:hover {
   -webkit-font-smoothing: auto;
   visibility: visible;
   opacity: 1;
-	background-color: rgba(34,34,34,1);
+	background-color: rgba(45,45,45,1);
   z-index: 1550; }
 
 /* top black bar with buttons and "1 of X" indicator */

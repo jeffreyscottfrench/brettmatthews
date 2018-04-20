@@ -69,7 +69,6 @@ var styleWatchFiles         = './build/assets/scss/**/*.scss'; // Path to all *.
 var vendorJSWatchFiles      = './build/assets/js/vendor/**/*.js'; // Path to all vendor JS files.
 var customJSWatchFiles      = './build/assets/js/custom/*.js'; // Path to all custom JS files.
 var imageWatchFiles         = './build/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Path to all image files inside img folder and inside them.
-var projectPHPWatchFiles    = './**/*.+(php|html)'; // Path to all PHP files.
 var projectNunjucksWatchFiles    = './build/nunjucks/**/*.+(nunjucks|njk|html)'; // Path to all nunjucks files.
 
 // Browsers you care about for autoprefixing.
@@ -175,6 +174,9 @@ gulp.task( 'browser-sync', function() {
 
     // Use a specific port (instead of the one auto-detected by Browsersync).
     port: 7000,
+
+    // Use a specific browser or multiple browsers ("google chrome" or multiple ["firefox", "safari technology preview"] ).
+    browser: ["google chrome"]
 
   } );
 });
@@ -323,6 +325,7 @@ gulp.task( 'customJS', function() {
  */
 gulp.task( 'images', function() {
  gulp.src( imagesSRC )
+   .pipe(newer( imagesDestination ))
    .pipe( imagemin( {
          progressive: true,
          optimizationLevel: 1, // 0-7 low-high
@@ -397,7 +400,7 @@ gulp.task('alias-folders', function(){
   .pipe(symlink('./dist/images'))
 });
 gulp.task('useref', function(){
-  return gulp.src('./build/**/*.+(html|php)')
+  return gulp.src('./build/**/*.html')
   .pipe(useref())
   .pipe(gulpIf('*.js', rev()))
   .pipe(gulpIf('*.css', rev()))
@@ -432,8 +435,6 @@ gulp.task('build', function(){
 gulp.task( 'default', ['nunjucks', 'styles', 'vendorsJs', 'customJS', 'images', 'browser-sync'], function () {
   // Rebuild compiled html files on nunjuck file changes and reload.
   gulp.watch( projectNunjucksWatchFiles, [ 'nunjucks' ] );
-  // Reload on SCSS file changes.
-  gulp.watch( projectPHPWatchFiles, [ reload ] );
   // Reload on images file changes.
   gulp.watch( imageWatchFiles, [ 'images', reload ] );
   // Reload on SCSS file changes.

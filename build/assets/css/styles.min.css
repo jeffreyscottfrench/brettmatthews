@@ -106,7 +106,7 @@ nav .sublink-1:before{position:absolute;left:.1875rem;top:-0.0625rem;content:'';
 nav .sublink-2{padding-left:2rem;position:relative}
 nav .sublink-2:before{position:absolute;left:.1875rem;top:-0.0625rem;content:'';height:100%;border:.0625rem solid #bdbdbd;border-left:0}
 footer{display:block;margin:1rem 0 0;padding:1.5rem .5rem .75rem;font-size:.875rem}
-footer a,footer a:visited{color:#0288d1}
+footer a,footer a:visited{color:#999}
 header.sticky,footer.sticky{position:-webkit-sticky;position:sticky;z-index:1101}
 header.sticky{top:0}
 footer.sticky{bottom:0}
@@ -223,6 +223,7 @@ ul.breadcrumbs li:last-child:after{border:0}
 .container-social{display:inline-block;width:auto;padding:0;text-align:center}
 .social{vertical-align:text-top}
 .social a{font-family:"Entypo-subset",sans-serif;font-size:20px;line-height:20px;color:#999;display:inline-block;margin:0 5px;text-decoration:none}
+.social a:hover{color:#454545}
 .social a.social-mail{font-size:31.2px;vertical-align:bottom}
 .social a:first-child{margin-left:0}
 .social a:last-child{margin-right:0}

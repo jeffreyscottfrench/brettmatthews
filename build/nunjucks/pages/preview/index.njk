@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% set content_special_class %}gallery-page{% endset %}
+{% set totalImages %}92{% endset %}
+{% set imageSrc %}preview/2018-preview{% endset %}
 
 {% block content %}
     <section>
@@ -14,7 +16,7 @@
         {%- import "_images.njk" as images -%}
 
         {{ images.thmb(
-          images='38',
+          images='92',
           div_class='thmb-sm container-image',
           a_href_base='preview/2018-preview',
           a_title='2018 Content Preview',
@@ -26,5 +28,4 @@
     {% include "partials/pswp.njk" %}
 
 {% endblock %}
-{% set slides_src %}preview-slides.js{% endset %}
 {% block scripts %}{% include "partials/pswp_scripts.njk" %}{% endblock %}
