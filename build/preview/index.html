@@ -38,9 +38,9 @@
 
     <link rel='mask-icon' href="http://brettmatthews.com/2018/images/_favicon/icon.svg" color="#999999">
 
-
-    <link rel="stylesheet" href="http://brettmatthews.com/2018/assets/css/styles.css" type="text/css">
-
+    <!--build:css ../assets/css/styles.min.css-->
+    <link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+    <!--endbuild-->
 
     <link href="http://brettmatthews.com/2018/assets/css/css-no-js.css" rel="stylesheet" type="text/css" id="css-no-js">
     <link href="http://brettmatthews.com/2018/assets/pswp/photoswipe.css" rel="stylesheet" type="text/css" id="css-pswp">
@@ -729,102 +729,6 @@
           </a>
         </div>
 
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-81.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-81-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-82.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-82-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-83.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-83-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-84.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-84-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-85.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-85-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-86.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-86-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-87.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-87-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-88.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-88-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-89.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-89-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-90.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-90-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-91.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-91-400w.jpg"
-                >
-          </a>
-        </div>
-
-        <div class="thmb-sm container-image">
-          <a href="../preview/2018-preview-92.html" title="2018 Content Preview">
-            <img alt="2018 Content Preview"
-            src="../images/preview/preview-thmb-92-400w.jpg"
-                >
-          </a>
-        </div>
-
       </div>
     </section>
 
@@ -928,7 +832,9 @@
 
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-<script src="http://brettmatthews.com/2018/assets/js/scripts.js"></script>
+<!--build:js ../assets/js/scripts.min.js -->
+<script src="../assets/js/scripts.js"></script>
+<!--endbuild-->
 
 <!-- Start of PhotoSwipe Code -->
 <script src="http://brettmatthews.com/2018/assets/pswp/photoswipe.js"></script>
@@ -995,7 +901,7 @@
 }
 
 // generate items array
-var totalImages = 92;
+var totalImages = 80;
 var imageSrc = "preview/2018-preview";
 var items = generateSlides(totalImages, imageSrc);
 </script>
