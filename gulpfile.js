@@ -109,9 +109,9 @@ var gulp         = require('gulp'); // Gulp of-course
 // CSS related plugins.
 var sass         = require('gulp-sass'); // Gulp pluign for Sass compilation.
 var postcss      = require('gulp-postcss');
-var autoprefixer = require('autoprefixer'); // Autoprefixing magic.
+var autoprefixer = require('gulp-autoprefixer'); // Autoprefixing magic.
 var cssnano      = require('cssnano'); // Minifies CSS files.
-var cssmqpacker  = require('css-mqpacker'); // Combine matching media queries into one media query definition.
+var mmq          = require('gulp-merge-media-queries'); // Combine matching media queries into one media query definition.
 
 // JS related plugins.
 var babel        = require('gulp-babel'); // write ES6!
@@ -279,15 +279,16 @@ gulp.task('styles', function () {
   .on('error', console.error.bind(console))
   .pipe( sourcemaps.write( { includeContent: false } ) )
   .pipe( sourcemaps.init( { loadMaps: true } ) )
-  .pipe( postcss([ autoprefixer(), cssmqpacker() ]) )
   // uncomment for manual list set above
-  // .pipe( postcss(autoprefixer( AUTOPREFIXER_BROWSERS )) )
-
+  // .pipe( autoprefixer( AUTOPREFIXER_BROWSERS ) )
+  .pipe( autoprefixer() )
   .pipe( sourcemaps.write ( "." ) ) // gulp is already in the dest folder now.
+
   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
   .pipe( gulp.dest( styleDestination ) )
 
   .pipe( filter( '**/*.css' ) ) // Filtering stream to only css files
+  .pipe( mmq( {log: true} ))
 
   .pipe( browserSync.stream() ) // Reloads style.css if that is enqueued.
 
@@ -509,8 +510,8 @@ gulp.task('watch', function(){
   gulp.watch( projectNunjucksWatchFiles, function(){
     runSequence('nunjucks', 'json', browserSync.reload);
   });
-  // Reload on SCSS file changes.
-  gulp.watch( projectPHPWatchFiles ).on('change', browserSync.reload );
+  // Reload on PHP file changes.
+  // gulp.watch( projectPHPWatchFiles ).on('change', browserSync.reload );
   // Rerun on SCSS file changes (will inject from styles task).
   gulp.watch( styleWatchFiles, function(){
     runSequence('styles');

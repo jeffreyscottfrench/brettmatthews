@@ -52,12 +52,12 @@ footer {
     width: 100%;
     margin: 20px auto 0;
     text-align: center;
-  &:first-child {
-    margin-top: 0;
-  }
-  @media (min-width: $break-small) {
-    @include flex(0,1,auto);
-    width: auto;
+    &:first-child {
+      margin-top: 0;
+    }
+    @media (min-width: $break-small) {
+      @include flex(0,1,auto);
+      width: auto;
     }
   }
 }

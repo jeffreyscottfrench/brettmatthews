@@ -72,7 +72,7 @@ $font-icon: 'Entypo-subset', sans-serif; // Icon Font
     }
   }
   & a.social-mail { // fix height discrepency and alignment issue
-    font-size: $base-root-font-size * 1.95;
+    font-size: $font-size * 1.95;
     vertical-align: bottom;
   }
   & a:first-child {

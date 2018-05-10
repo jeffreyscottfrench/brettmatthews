@@ -1,6 +1,6 @@
 <!-- Start of PhotoSwipe Code -->
-<script src="http://localhost:7000/assets/pswp/photoswipe.js"></script>
-<script src="http://localhost:7000/assets/pswp/photoswipe-ui-default.min.js"></script>
+<script src="/assets/pswp/photoswipe.js"></script>
+<script src="/assets/pswp/photoswipe-ui-default.min.js"></script>
 <script>
   const generateSlides = function(totalImages, imageSrc) {
   const slides = [];
@@ -12,47 +12,47 @@
     var slide = {
       slide: Number(i),
       _640Image: {
-        src: `../images/${imageSrc}-${i}-640w.jpg`,
+        src: `/images/${imageSrc}-${i}-640w.jpg`,
         w: 640,
         h: 427
       },
       _960Image: {
-        src: `../images/${imageSrc}-${i}-960w.jpg`,
+        src: `/images/${imageSrc}-${i}-960w.jpg`,
         w: 960,
         h: 640
       },
       _1140Image: {
-        src: `../images/${imageSrc}-${i}-1140w.jpg`,
+        src: `/images/${imageSrc}-${i}-1140w.jpg`,
         w: 1140,
         h: 760
       },
       _1340Image: {
-        src: `../images/${imageSrc}-${i}-1340w.jpg`,
+        src: `/images/${imageSrc}-${i}-1340w.jpg`,
         w: 1340,
         h: 893
       },
       _1500Image: {
-        src: `../images/${imageSrc}-${i}-1500w.jpg`,
+        src: `/images/${imageSrc}-${i}-1500w.jpg`,
         w: 1500,
         h: 1000
       },
       _1750Image: {
-        src: `../images/${imageSrc}-${i}-1750w.jpg`,
+        src: `/images/${imageSrc}-${i}-1750w.jpg`,
         w: 1750,
         h: 1167
       },
       _2000Image: {
-        src: `../images/${imageSrc}-${i}-2000w.jpg`,
+        src: `/images/${imageSrc}-${i}-2000w.jpg`,
         w: 2000,
         h: 1333
       },
       _2250Image: {
-        src: `../images/${imageSrc}-${i}-2250w.jpg`,
+        src: `/images/${imageSrc}-${i}-2250w.jpg`,
         w: 2250,
         h: 1500
       },
       _2500Image: {
-        src: `../images/${imageSrc}-${i}-2500w.jpg`,
+        src: `/images/${imageSrc}-${i}-2500w.jpg`,
         w: 2500,
         h: 1667
       }
@@ -67,5 +67,5 @@ var totalImages = {{ totalImages }};
 var imageSrc = "{{ imageSrc }}";
 var items = generateSlides(totalImages, imageSrc);
 </script>
-<script src="http://localhost:7000/assets/pswp/pswp-from-DOM.js"></script>
+<script src="/assets/pswp/pswp-from-DOM.js"></script>
 <!-- End of PhotoSwipe Code -->
