@@ -28,16 +28,16 @@
  * In paths you can add <<glob or array of globs>>. Edit the variables as per your project requirements.
  */
 
- // START Editing Project Variables.
+ // START Editing Project Variables. Use the guide in the ReadMe.
  // Project related.
  var project                 = 'Brett Matthews Photography'; // Project Name.
  var projectURL              = 'brettmatthews.dev'; // Project URL. Could be something like localhost:8888.
  var productURL              = './'; // Theme/Plugin URL. Leave it like it is, since our gulpfile.js lives in the root folder.
 
  // // Translation related for WP
- // var text_domain             = 'bmblog'; // Your textdomain here.
- // var destFile                = 'bm2017.pot'; // Name of the transalation file.
- // var packageName             = 'bm2017'; // Package name.
+ // var text_domain             = 'ProjectURLBase'; // Your textdomain here.
+ // var destFile                = 'ProjectURLBase.pot'; // Name of the transalation file.
+ // var packageName             = 'ProjectURLBase'; // Package name.
  // var bugReport               = ''; // Where can users report bugs.
  // var lastTranslator          = 'Jeffrey Scott French <jeffreyscottfrench@gmail.com>'; // Last translator Email ID.
  // var team                    = ''; // Team's Email ID.
@@ -57,7 +57,7 @@ var jsVendorFile            = 'vendors'; // Compiled JS vendors file name.
 // JS Custom related.
 var jsCustomSRC             = './build/assets/js/custom/*.js'; // Path to JS custom scripts folder.
 var jsCustomDestination     = './build/assets/js/'; // Path to place the compiled JS custom scripts file.
-var jsCustomFile            = 'thebitterbottle'; // Compiled JS custom file name.
+var jsCustomFile            = project; // Compiled JS custom file name.
 // Default set to custom i.e. custom.js.
 
 // Images related.
@@ -71,24 +71,27 @@ var customJSWatchFiles      = './build/assets/js/custom/*.js'; // Path to all cu
 var imageWatchFiles         = './build/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Path to all image files inside img folder and inside them.
 var projectNunjucksWatchFiles    = './build/nunjucks/**/*.+(nunjucks|njk|html)'; // Path to all nunjucks files.
 
-// Browsers you care about for autoprefixing.
-// Browserlist https        ://github.com/ai/browserslist
-const AUTOPREFIXER_BROWSERS = [
-    'last 2 version',
-    '> 1%',
-    'ie >= 9',
-    'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
-    'android >= 4',
-    'bb >= 10'
-  ];
+/** Browsers you care about for autoprefixing.
+* Use the current defaults set via package.json using
+* Browserlist https://github.com/ai/browserslist
+* or uncomment below to manually specifiy, and then swap which usage of autoprefixer is called in the 'styles' task at line 230 (approx).
+*/
+// const AUTOPREFIXER_BROWSERS = [
+//     'last 2 version',
+//     '> 1%',
+//     'ie >= 9',
+//     'ie_mob >= 10',
+//     'ff >= 30',
+//     'chrome >= 34',
+//     'safari >= 7',
+//     'opera >= 23',
+//     'ios >= 7',
+//     'android >= 4',
+//     'bb >= 10'
+//   ];
 
 /** Additional static files that should be included in the build.
- * These can be preview in the normal build and will be copied over to the dist folder.
+ * These can be previewed in the normal build and will be copied over to the dist folder.
 */
 var extras = {
   files: ['./build/.htaccess', './build/favicon.ico', './build/robots.txt', './build/ieconfig.xml', './build/sitemap.xml']
@@ -105,11 +108,13 @@ var gulp         = require('gulp'); // Gulp of-course
 
 // CSS related plugins.
 var sass         = require('gulp-sass'); // Gulp pluign for Sass compilation.
-var minifycss    = require('gulp-uglifycss'); // Minifies CSS files.
-var autoprefixer = require('gulp-autoprefixer'); // Autoprefixing magic.
-var mmq          = require('gulp-merge-media-queries'); // Combine matching media queries into one media query definition.
+var postcss      = require('gulp-postcss');
+var autoprefixer = require('autoprefixer'); // Autoprefixing magic.
+var cssnano      = require('cssnano'); // Minifies CSS files.
+var cssmqpacker  = require('css-mqpacker'); // Combine matching media queries into one media query definition.
 
 // JS related plugins.
+var babel        = require('gulp-babel'); // write ES6!
 var concat       = require('gulp-concat'); // Concatenates JS files
 var uglify       = require('gulp-uglify'); // Minifies JS files
 
@@ -134,7 +139,7 @@ var newer        = require('gulp-newer');
 var del          = require('del');
 var path         = require('path');
 var data         = require('gulp-data'); // Attach data from outside source
-var swig         = require('gulp-swig'); // Push data to other functions
+var lazypipe     = require('lazypipe');
 var runSequence  = require('run-sequence');
 var php          = require('gulp-connect-php'); // Serve php files locally in the build environment using browserSync.
 var browserSync  = require('browser-sync').create(); // Reloads browser and injects CSS. Time-saving synchronised browser testing.
@@ -173,14 +178,45 @@ gulp.task( 'browser-sync', function() {
     injectChanges: true,
 
     // Use a specific port (instead of the one auto-detected by Browsersync).
-    port: 7000,
+    port: 3000,
 
     // Use a specific browser or multiple browsers ("google chrome" or multiple ["firefox", "safari technology preview"] ).
-    browser: ["google chrome"]
+    browser: ["google chrome", "firefox developer edition"]
+
+  } );
+});
+gulp.task( 'browser-sync_proof', function() {
+  browserSync.init( {
+
+    // For more options
+    // @link http://www.browsersync.io/docs/options/
+    server: {
+      baseDir: './dist'
+    },
+    // Project URL.
+    // proxy: 'stephentalasnik.dev',
+
+    // `true` Automatically open the browser with BrowserSync live server.
+    // `false` Stop the browser from automatically opening.
+    open: true,
+
+    // Inject CSS changes.
+    // Comment it to reload browser for every CSS change.
+    injectChanges: true,
+
+    // Use a specific port (instead of the one auto-detected by Browsersync).
+    port: 8888,
+
+    // Use a specific browser or multiple browsers ("google chrome" or multiple ["firefox", "safari technology preview"] ).
+    browser: ["google chrome", "firefox developer edition"]
 
   } );
 });
 
+/**
+ * Task: 'nunjucks'
+ * standard nunjucks environment
+ **/
 gulp.task('nunjucks', function(){
   return gulp.src('./build/nunjucks/pages/**/*.+(njk|html)')
   .pipe(nunjucksRender({
@@ -206,6 +242,15 @@ gulp.task('json-test', function() {
 });
 
 
+gulp.task('json', function() {
+  return gulp.src('./build/nunjucks/pages/**/*.nunjucks')
+  .pipe(data(getJsonData))
+  // Do stuff with the data here or just send it on down the pipe
+  .pipe(nunjucksRender({
+    path: ['./build/nunjucks/templates']
+  }))
+  .pipe(gulp.dest('./build'))
+});
 /**
  * Task: `styles`.
  *
@@ -221,40 +266,44 @@ gulp.task('json-test', function() {
  *    7. Injects CSS or reloads the browser via browserSync
  */
 gulp.task('styles', function () {
-   gulp.src( styleSRC )
-   .pipe( sourcemaps.init() )
-   .pipe( sass( {
-     errLogToConsole: true,
-     outputStyle: 'compact',
-     //outputStyle: 'compressed',
-     // outputStyle: 'nested',
-     // outputStyle: 'expanded',
-     precision: 10
-   } ) )
-   .on('error', console.error.bind(console))
-   .pipe( sourcemaps.write( { includeContent: false } ) )
-   .pipe( sourcemaps.init( { loadMaps: true } ) )
-   .pipe( autoprefixer( AUTOPREFIXER_BROWSERS ) )
+  gulp.src( styleSRC )
+  .pipe( sourcemaps.init() )
+  .pipe( sass( {
+    errLogToConsole: true,
+    outputStyle: 'compact',
+    //outputStyle: 'compressed',
+    // outputStyle: 'nested',
+    // outputStyle: 'expanded',
+    precision: 10
+  } ) )
+  .on('error', console.error.bind(console))
+  .pipe( sourcemaps.write( { includeContent: false } ) )
+  .pipe( sourcemaps.init( { loadMaps: true } ) )
+  .pipe( postcss([ autoprefixer(), cssmqpacker() ]) )
+  // uncomment for manual list set above
+  // .pipe( postcss(autoprefixer( AUTOPREFIXER_BROWSERS )) )
 
-   .pipe( sourcemaps.write ( "" ) ) // gulp is already in the dest folder now.
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( styleDestination ) )
+  .pipe( sourcemaps.write ( "." ) ) // gulp is already in the dest folder now.
+  .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
+  .pipe( gulp.dest( styleDestination ) )
 
-   .pipe( filter( '**/*.css' ) ) // Filtering stream to only css files
-   .pipe( mmq( { log: true } ) ) // Merge Media Queries only for .min.css version.
+  .pipe( filter( '**/*.css' ) ) // Filtering stream to only css files
 
-   .pipe( browserSync.stream() ) // Reloads style.css if that is enqueued.
+  .pipe( browserSync.stream() ) // Reloads style.css if that is enqueued.
 
-   .pipe( rename( { suffix: '.min' } ) )
-   .pipe( minifycss( {
-     maxLineLen: 10
-   }))
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( styleDestination ) )
+  .pipe( rename( { suffix: '.min' } ) )
+  .pipe( postcss([ cssnano() ]) )
+  .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
+  .pipe( gulp.dest( styleDestination ))
 
-   .pipe( filter( '**/*.css' ) ) // Filtering stream to only css files
-   .pipe( browserSync.stream() )// Reloads style.min.css if that is enqueued.
-   .pipe( notify( { message: 'TASK: "styles" Completed! 💯', onLast: true } ) )
+  .pipe( filter( '**/*.css' )) // Filtering stream to only css files
+  .pipe( browserSync.stream() )// Reloads style.min.css if that is enqueued.
+  .pipe( notify({
+    onlast: true,
+    message: function(){
+      return 'TASK: "styles" Completed! 💯';
+    }
+  }));
 });
 
 /**
@@ -269,18 +318,28 @@ gulp.task('styles', function () {
  *     4. Uglifes/Minifies the JS file and generates vendors.min.js
  */
 gulp.task( 'vendorsJs', function() {
- gulp.src( jsVendorSRC )
-   .pipe( concat( jsVendorFile + '.js' ) )
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( jsVendorDestination ) )
-   .pipe( rename( {
-     basename: jsVendorFile,
-     suffix: '.min'
-   }))
-   .pipe( uglify() )
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( jsVendorDestination ) )
-   .pipe( notify( { message: 'TASK: "vendorsJs" Completed! 💯', onLast: true } ) );
+  gulp.src( jsVendorSRC )
+  .pipe( sourcemaps.init() )
+  .pipe( babel({
+    presets:['env']
+  }) )
+  .pipe( concat( jsVendorFile + '.js' ) )
+  .pipe( sourcemaps.write('.') )
+  .pipe( gulp.dest( jsVendorDestination ) )
+  .pipe( rename( {
+    basename: jsVendorFile,
+    suffix: '.min'
+  }))
+  .pipe( filter( '**/*.js' )) // Filtering stream to only js files
+  .pipe( uglify() )
+  .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
+  .pipe( gulp.dest( jsVendorDestination ) )
+  .pipe( notify({
+    onLast: true,
+    message: function(){
+      return 'TASK: "vendorsJs" Completed! 💯';
+    }
+  }) );
 });
 
 
@@ -296,18 +355,28 @@ gulp.task( 'vendorsJs', function() {
  *     4. Uglifes/Minifies the JS file and generates custom.min.js
  */
 gulp.task( 'customJS', function() {
-   gulp.src( jsCustomSRC )
-   .pipe( concat( jsCustomFile + '.js' ) )
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( jsCustomDestination ) )
-   .pipe( rename( {
-     basename: jsCustomFile,
-     suffix: '.min'
-   }))
-   .pipe( uglify() )
-   .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
-   .pipe( gulp.dest( jsCustomDestination ) )
-   .pipe( notify( { message: 'TASK: "customJs" Completed! 💯', onLast: true } ) );
+    gulp.src( jsCustomSRC )
+    .pipe( sourcemaps.init() )
+    .pipe( babel({
+      presets:['env']
+    }) )
+    .pipe( concat( jsCustomFile + '.js' ) )
+    .pipe( sourcemaps.write('.') )
+    .pipe( gulp.dest( jsCustomDestination ) )
+    .pipe( rename( {
+      basename: jsCustomFile,
+      suffix: '.min'
+    }))
+    .pipe( filter( '**/*.js' )) // Filtering stream to only js files
+    .pipe( uglify() )
+    .pipe( lineec() ) // Consistent Line Endings for non UNIX systems.
+    .pipe( gulp.dest( jsCustomDestination ) )
+    .pipe( notify({
+      onLast: true,
+      message: function(){
+        return 'TASK: "customJS" Completed! 💯';
+      }
+    }) );
 });
 
 /**
@@ -400,8 +469,11 @@ gulp.task('alias-folders', function(){
   .pipe(symlink('./dist/images'))
 });
 gulp.task('useref', function(){
-  return gulp.src('./build/**/*.html')
-  .pipe(useref())
+  return gulp.src('./build/**/*.+(html|php)')
+  .pipe(useref({transformPath: function(filePath){
+    const regExp = '\.*\/assets\\';
+    return filePath.replace(regExp, '/assets');
+  }}))
   .pipe(gulpIf('*.js', rev()))
   .pipe(gulpIf('*.css', rev()))
   .pipe(revReplace())
@@ -419,8 +491,8 @@ gulp.task('copyFiles', function(){
 
 /** Build out the site to upload */
 gulp.task('build', function(){
-  runSequence('clean:dist', 'alias-folders',
-    ['useref', 'fonts', 'copyFiles'])
+  runSequence('clean:dist', 'alias-folders', 'nunjucks',
+    ['useref', 'fonts', 'copyFiles'], 'browser-sync_proof')
 });
 
 // Use With Sync to Virtual Machine (WP development)
@@ -431,16 +503,31 @@ gulp.task('build', function(){
 //  gulp.watch( customJSWatchFiles, [ 'customJS', 'sync', reload ] ); // Reload on customJS file changes.
 // });
 
-// Standard
-gulp.task( 'default', ['nunjucks', 'styles', 'vendorsJs', 'customJS', 'images', 'browser-sync'], function () {
+// Watch for changes (called from default)
+gulp.task('watch', function(){
   // Rebuild compiled html files on nunjuck file changes and reload.
-  gulp.watch( projectNunjucksWatchFiles, [ 'nunjucks' ] );
-  // Reload on images file changes.
-  gulp.watch( imageWatchFiles, [ 'images', reload ] );
+  gulp.watch( projectNunjucksWatchFiles, function(){
+    runSequence('nunjucks', 'json', browserSync.reload);
+  });
   // Reload on SCSS file changes.
-  gulp.watch( styleWatchFiles, [ 'styles', reload ] );
+  gulp.watch( projectPHPWatchFiles ).on('change', browserSync.reload );
+  // Rerun on SCSS file changes (will inject from styles task).
+  gulp.watch( styleWatchFiles, function(){
+    runSequence('styles');
+  } );
+  // Rerun and Reload on images file changes.
+  gulp.watch( imageWatchFiles, function(){
+    runSequence('images', browserSync.reload);
+  });
   // Reload on vendorsJs file changes.
-  gulp.watch( vendorJSWatchFiles, [ 'vendorsJs', reload ] );
-  // Reload on customJS file changes.
-  gulp.watch( customJSWatchFiles, [ 'customJS', reload ] );
+  gulp.watch( vendorJSWatchFiles ).on('change', browserSync.reload);
+  // Rerun and Reload on customJS file changes.
+  gulp.watch( customJSWatchFiles, function(){
+    runSequence('customJS', browserSync.reload);
+  });
+});
+
+// Standard
+gulp.task( 'default', function(){
+  runSequence('nunjucks', 'json', 'styles', 'vendorsJs', 'customJS', 'images', 'browser-sync', 'watch')
 });

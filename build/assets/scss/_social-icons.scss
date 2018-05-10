@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Entypo-subset';
-  src: url('../fonts/entypo-subset/entypo-subset.eot?14955217');
-  src: url('../fonts/entypo-subset/entypo-subset.eot?14955217#iefix') format('embedded-opentype'),
-       url('../fonts/entypo-subset/entypo-subset.woff2?14955217') format('woff2'),
-       url('../fonts/entypo-subset/entypo-subset.woff?14955217') format('woff'),
-       url('../fonts/entypo-subset/entypo-subset.ttf?14955217') format('truetype'),
-       url('../fonts/entypo-subset/entypo-subset.svg?14955217#entypo-subset') format('svg');
+  src: url('/assets/fonts/entypo-subset/entypo-subset.eot?14955217');
+  src: url('/assets/fonts/entypo-subset/entypo-subset.eot?14955217#iefix') format('embedded-opentype'),
+       url('/assets/fonts/entypo-subset/entypo-subset.woff2?14955217') format('woff2'),
+       url('/assets/fonts/entypo-subset/entypo-subset.woff?14955217') format('woff'),
+       url('/assets/fonts/entypo-subset/entypo-subset.ttf?14955217') format('truetype'),
+       url('/assets/fonts/entypo-subset/entypo-subset.svg?14955217#entypo-subset') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'entypo-subset';
-    src: url('../fonts/entypo-subset/entypo-subset.svg?12057408#entypo-subset') format('svg');
+    src: url('/assets/fonts/entypo-subset/entypo-subset.svg?12057408#entypo-subset') format('svg');
   }
 }
 */

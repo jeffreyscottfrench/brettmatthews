@@ -1,14 +1,14 @@
 //variables
 
+$font-size: 16px; // Default size is 16px
+$line-height: $font-size * 1.25; // Default multiplier is 1.25
+$letter-spacing: 1px; // Default is 1px
+
 $font-primary: Verdana, Geneva, sans-serif; // Body
 $font-secondary: Verdana, Geneva, sans-serif; // Menus
-$font-terciary: 'Entypo-subset', sans-serif; // Icon Font
+$font-icon: "Entypo-subset", sans-serif; // Icons
 
-$font-size: 16px;
-$line-height: 18px;
-$letter-spacing: 1px;
-
-$color-primary: #BBBBBB;
+$color-primary: #bbbbbb;
 $color-secondary: #666666;
 $color-terciary: #000000;
 
