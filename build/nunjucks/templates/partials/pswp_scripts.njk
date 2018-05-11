@@ -1,6 +1,10 @@
 <!-- Start of PhotoSwipe Code -->
+<!--build:js(./build) /assets/pswp/photoswipe.min.js -->
 <script src="/assets/pswp/photoswipe.js"></script>
-<script src="/assets/pswp/photoswipe-ui-default.min.js"></script>
+<!--endbuild-->
+<!--build:js(./build) /assets/pswp/photoswipe-ui-default.min.js -->
+<script src="/assets/pswp/photoswipe-ui-default.js"></script>
+<!--endbuild-->
 <script>
   const generateSlides = function(totalImages, imageSrc) {
   const slides = [];
@@ -67,5 +71,7 @@ var totalImages = {{ totalImages }};
 var imageSrc = "{{ imageSrc }}";
 var items = generateSlides(totalImages, imageSrc);
 </script>
+<!--build:js(./build) /assets/pswp/pswp-from-DOM.min.js -->
 <script src="/assets/pswp/pswp-from-DOM.js"></script>
+<!--endbuild-->
 <!-- End of PhotoSwipe Code -->

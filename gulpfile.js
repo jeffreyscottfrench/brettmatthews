@@ -90,11 +90,12 @@ var projectNunjucksWatchFiles    = './build/nunjucks/**/*.+(nunjucks|njk|html)';
 //     'bb >= 10'
 //   ];
 
-/** Additional static files that should be included in the build.
+/** Additional static files that should be included in the build. reference file path as relative to ./build/
+ * so that these will be copied to dist in the same folder hierarchy.
  * These can be previewed in the normal build and will be copied over to the dist folder.
 */
 var extras = {
-  files: ['./build/.htaccess', './build/favicon.ico', './build/robots.txt', './build/ieconfig.xml', './build/sitemap.xml']
+  files: ['./build/.htaccess', './build/favicon.ico', './build/robots.txt', './build/ieconfig.xml', './build/sitemap.xml', './build/assets/pswp/default-skin/*.+(png|svg|gif)']
 };
 
 // STOP Editing Project Variables.
@@ -485,8 +486,8 @@ gulp.task('fonts', function(){
   .pipe(gulp.dest('./dist/assets/fonts'))
 });
 gulp.task('copyFiles', function(){
-  return gulp.src(extras.files)
-  .pipe(gulp.dest('./dist'))
+  return gulp.src(extras.files, {base: './build'})
+  .pipe(gulp.dest( './dist' ))
 });
 
 
