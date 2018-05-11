@@ -32,6 +32,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         var eTarget = e.target || e.srcElement;
 
+
         // find root element of slide
         var clickedListItem = closest(eTarget, function(el) {
             return (el.tagName && el.tagName.toUpperCase() === 'DIV');
@@ -73,6 +74,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
     // parse picture index and gallery index from URL (#&pid=1&gid=2)
     var photoswipeParseHash = function() {
+
         var hash = window.location.hash.substring(1),
         params = {};
 
@@ -95,12 +97,14 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         if(params.gid) {
             params.gid = parseInt(params.gid, 10);
         }
+        if(params.pid) {
+            params.pid = parseInt(params.pid, 10);
+        }
 
         return params;
     };
 
     var openPhotoSwipe = function(index, galleryElement, eTarget, disableAnimation, fromURL) {  // added eTarget - by JSF
-
         var pswpElement = document.querySelectorAll('.pswp')[0],
             gallery,
             options;
@@ -128,14 +132,15 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             // define gallery index (for URL)
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
 
-            getThumbBoundsFn: function(index) {
-                // See Options -> getThumbBoundsFn section of documentation for more info
-                var thumbnail = eTarget, // find thumbnail - already defined above as eTarget - by JSF
-                    pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-                    rect = thumbnail.getBoundingClientRect();
+            // this is only needed when animating into and out of gallery
+            // getThumbBoundsFn: function(index) {
+            //     // See Options -> getThumbBoundsFn section of documentation for more info
+            //     var thumbnail = eTarget, // find thumbnail - already defined above as eTarget - by JSF
+            //     pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+            //     rect = thumbnail.getBoundingClientRect();
 
-                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-            }
+            //     return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+            // }
 
         };
 

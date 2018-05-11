@@ -3,14 +3,147 @@
 {% block content %}
   <section class="content">
 
-    <div class="container-image" id="image-home">
-      <a class="image-link" href="preview/index.html">
-        {% set image_path="/images/preview/2018-preview-01" %}
-          <img alt="A Bride and Groom and their wedding party walking arm in arm on a New York City Street"
-            {% include "partials/ri-full-width.njk" %}>
+    <div class="flex-box container-slideshow bm-slideshow-index">
 
-      </a>
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=8" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-08{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=16" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-16{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=10" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-10{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=20" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-20{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=24" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-24{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=37" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-37{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=31" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-31{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=54" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-54{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=56" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-56{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=71" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-71{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
+      <div class="container-image">
+        <a href="/preview/index.html#&gid=1&pid=70" title="">
+          <picture>{% set image_path %}/images/preview/2018-preview-70{% endset %}
+            <img alt=""
+              {% include "partials/ri-full-width.njk" %}>
+          </picture>
+        </a>
+      </div>
+
     </div>
 
   </section>
+{% endblock %}
+{% block scripts %}
+  <!--build:js(./build) /assets/js/slick.min.js -->
+  <script type="text/javascript" src="/assets/slick/slick.js"></script>
+  <!--endbuild-->
+  <script>
+    $(document).ready(function(){
+      // initiate slick slider
+      $('.bm-slideshow-index').slick({
+        autoplay: true,
+        autoplaySpeed: 3000,
+        fade: false,
+        speed: 500,
+        easing: 'swing',
+        cssEase: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+        arrows: false,
+        lazyload: 'ondemand',
+        mobileFirst: true,
+        touchMove: true
+      });
+
+      /* look for data for timing on each slide in slideshows */
+      var cs = $('.container-slideshow'),
+          holdTime;
+      cs.on('init',
+        function(event, slick){
+          holdTime = $('.slick-slide').get(0).dataset.time;
+          cs.slick("setOption", "autoplaySpeed", holdTime)
+        }
+      );
+      cs.on('afterChange',
+        function(e, slick){
+          var curr = cs.slick('slickCurrentSlide');
+          holdTime = $('.slick-slide').get(curr).dataset.time;
+          cs.slick("setOption", "autoplaySpeed", holdTime)
+        }
+      );
+    });
+  </script>
 {% endblock %}

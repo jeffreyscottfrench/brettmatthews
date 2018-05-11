@@ -1,0 +1,24 @@
+.container-slideshow,
+.container-slideshow-strip,
+.container-strip {
+  position: relative;
+}
+.container-slideshow:not(.slick-slider) {
+  @include flex-flow(row nowrap);
+  @include justify-content(flex-start);
+  overflow-x: scroll;
+  & .container-image {
+    @include flex(0,0,auto);
+    width: 100%;
+    &:nth-child(n+2) {
+      margin-left: 20px;
+    }
+  }
+}
+.container-image {
+  max-height: 100%;
+  & img {
+    width: 100%;
+    max-width: 100%;
+  }
+}

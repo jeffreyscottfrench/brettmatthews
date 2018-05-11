@@ -192,6 +192,9 @@ section {
       }
     }
   }
+  &.content {
+    position: relative;
+  }
 }
 
 ul {
