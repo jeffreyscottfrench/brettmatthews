@@ -44,31 +44,31 @@
  // var translatePath           = './languages' // Where to save the translation files.
 
 // Style related.
-var styleSRC                = './build/assets/scss/styles.scss'; // Path to main .scss file.
-var styleDestination        = './build/assets/css/'; // Path to place the compiled CSS file.
+var styleSRC                = './build/2018/assets/scss/styles.scss'; // Path to main .scss file.
+var styleDestination        = './build/2018/assets/css/'; // Path to place the compiled CSS file.
 // Defualt set to root folder.
 
 // JS Vendor related.
-var jsVendorSRC             = './build/assets/js/vendor/*.js'; // Path to JS vendor folder.
-var jsVendorDestination     = './build/assets/js/'; // Path to place the compiled JS vendors file.
+var jsVendorSRC             = './build/2018/assets/js/vendor/*.js'; // Path to JS vendor folder.
+var jsVendorDestination     = './build/2018/assets/js/'; // Path to place the compiled JS vendors file.
 var jsVendorFile            = 'vendors'; // Compiled JS vendors file name.
 // Default set to vendors i.e. vendors.js.
 
 // JS Custom related.
-var jsCustomSRC             = './build/assets/js/custom/*.js'; // Path to JS custom scripts folder.
-var jsCustomDestination     = './build/assets/js/'; // Path to place the compiled JS custom scripts file.
+var jsCustomSRC             = './build/2018/assets/js/custom/*.js'; // Path to JS custom scripts folder.
+var jsCustomDestination     = './build/2018/assets/js/'; // Path to place the compiled JS custom scripts file.
 var jsCustomFile            = 'bm-scripts'; // Compiled JS custom file name.
 // Default set to custom i.e. custom.js.
 
 // Images related.
-var imagesSRC               = './build/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Source folder of images which should be optimized.
-var imagesDestination       = './build/images/'; // Destination folder of optimized images. Must be different from the imagesSRC folder.
+var imagesSRC               = './build/2018/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Source folder of images which should be optimized.
+var imagesDestination       = './build/2018/images/'; // Destination folder of optimized images. Must be different from the imagesSRC folder.
 
 // Watch files paths.
-var styleWatchFiles         = './build/assets/scss/**/*.scss'; // Path to all *.scss files inside css folder and inside them.
-var vendorJSWatchFiles      = './build/assets/js/vendor/**/*.js'; // Path to all vendor JS files.
-var customJSWatchFiles      = './build/assets/js/custom/*.js'; // Path to all custom JS files.
-var imageWatchFiles         = './build/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Path to all image files inside img folder and inside them.
+var styleWatchFiles         = './build/2018/assets/scss/**/*.scss'; // Path to all *.scss files inside css folder and inside them.
+var vendorJSWatchFiles      = './build/2018/assets/js/vendor/**/*.js'; // Path to all vendor JS files.
+var customJSWatchFiles      = './build/2018/assets/js/custom/*.js'; // Path to all custom JS files.
+var imageWatchFiles         = './build/2018/assets/img/raw/**/*.{png,jpg,gif,svg}'; // Path to all image files inside img folder and inside them.
 var projectNunjucksWatchFiles    = './build/nunjucks/**/*.+(nunjucks|njk|html)'; // Path to all nunjucks files.
 
 /** Browsers you care about for autoprefixing.
@@ -95,7 +95,7 @@ var projectNunjucksWatchFiles    = './build/nunjucks/**/*.+(nunjucks|njk|html)';
  * These can be previewed in the normal build and will be copied over to the dist folder.
 */
 var extras = {
-  files: ['./build/.htaccess', './build/favicon.ico', './build/robots.txt', './build/ieconfig.xml', './build/sitemap.xml', './build/assets/pswp/default-skin/*.+(png|svg|gif)']
+  files: ['./build/.htaccess', './build/robots.txt', './build/sitemap.xml', './build/2018/favicon.ico', './build/2018/ieconfig.xml', './build/2018/assets/pswp/default-skin/*.+(png|svg|gif)']
 };
 
 // STOP Editing Project Variables.
@@ -219,7 +219,7 @@ gulp.task( 'browser-sync_proof', function() {
  * standard nunjucks environment
  **/
 gulp.task('nunjucks', function(){
-  return gulp.src('./build/nunjucks/pages/**/*.+(njk|html)')
+  return gulp.src('./build/nunjucks/njk_SrcFiles/**/*.+(njk|html)')
   .pipe(nunjucksRender({
     path: ['./build/nunjucks/templates']
   }))
@@ -230,12 +230,12 @@ gulp.task('nunjucks', function(){
   Get data via JSON file, keyed on filename.
 */
 var getJsonData = function(file) {
-  return require('./build/nunjucks/pages/**/' + path.basename(file.path));
+  return require('./build/nunjucks/njk_SrcFiles//**/' + path.basename(file.path));
 };
 
 gulp.task('json-test', function() {
-  return gulp.src('./build/nunjucks/pages/**/*.+(json|html)')
-    .pipe(data(require('./build/nunjucks/pages/**/' + path.basename(file.path))))
+  return gulp.src('./build/nunjucks/njk_SrcFiles/**/*.+(json|html)')
+    .pipe(data(require('./build/nunjucks/njk_SrcFiles/**/' + path.basename(file.path))))
     .pipe(nunjucksRender({
       path: ['./build/nunjucks/templates']
     }))
@@ -244,7 +244,7 @@ gulp.task('json-test', function() {
 
 
 gulp.task('json', function() {
-  return gulp.src('./build/nunjucks/pages/**/*.nunjucks')
+  return gulp.src('./build/nunjucks/njk_SrcFiles/**/*.nunjucks')
   .pipe(data(getJsonData))
   // Do stuff with the data here or just send it on down the pipe
   .pipe(nunjucksRender({
@@ -467,14 +467,14 @@ gulp.task('clean:dist', function(){
   return del.sync('./dist');
 })
 gulp.task('alias-folders', function(){
-  return gulp.src('./build/images')
-  .pipe(symlink('./dist/images'))
+  return gulp.src('./build/2018/images')
+  .pipe(symlink('./dist/2018/images'))
 });
 gulp.task('useref', function(){
   return gulp.src('./build/**/*.+(html|php)')
   .pipe(useref({transformPath: function(filePath){
-    const regExp = '\.*\/assets\\';
-    return filePath.replace(regExp, '/assets');
+    const regExp = '\.*\/2018/assets\\';
+    return filePath.replace(regExp, '/2018/assets');
   }}))
   .pipe(gulpIf('*.js', rev()))
   .pipe(gulpIf('*.css', rev()))
@@ -482,8 +482,8 @@ gulp.task('useref', function(){
   .pipe(gulp.dest('./dist'))
 });
 gulp.task('fonts', function(){
-  return gulp.src('./build/assets/fonts/**/*')
-  .pipe(gulp.dest('./dist/assets/fonts'))
+  return gulp.src('./build/2018/assets/fonts/**/*')
+  .pipe(gulp.dest('./dist/2018/assets/fonts'))
 });
 gulp.task('copyFiles', function(){
   return gulp.src(extras.files, {base: './build'})

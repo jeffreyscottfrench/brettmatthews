@@ -7,7 +7,7 @@
 
 {% set content_special_class %}gallery-page{% endset %}
 {% set totalImages %}80{% endset %}
-{% set imageSrc %}preview/2018-preview{% endset %}
+{% set imageSrc %}/2018/images/preview/2018-preview{% endset %}
 
 {% block content %}
     <section>
@@ -18,9 +18,9 @@
         {{ images.thmb(
           images='80',
           div_class='thmb-sm container-image',
-          a_href_base='preview/2018-preview',
+          a_href_base='/2018/preview/2018-preview',
           a_title='2018 Content Preview',
-          img_alt='2018 Content Preview', img_src_base='../images/preview/preview-thmb') }}
+          img_alt='2018 Content Preview', img_src_base='/2018/images/preview/preview-thmb') }}
 
       </div>
     </section>

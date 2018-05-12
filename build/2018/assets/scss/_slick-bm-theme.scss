@@ -11,9 +11,9 @@
 // "\2192" outputs ascii character "→"
 // "\2022" outputs ascii character "•"
 
-$slick-font-path: "/assets/fonts/entypo-subset-slick/" !default;
+$slick-font-path: "/2018/assets/fonts/entypo-subset-slick/" !default;
 $slick-font-family: "Entypo-subset" !default;
-$slick-loader-path: "/assets/slick/" !default;
+$slick-loader-path: "/2018/assets/slick/" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
 $slick-dot-color-active: $slick-dot-color !default;
@@ -57,12 +57,12 @@ $slick-opacity-not-active: 0 !default;
 @if $slick-font-family == "Entypo-subset-slick" {
   @font-face {
     font-family: 'Entypo-subset';
-    src: url('/assets/fonts/entypo-subset-slick/entypo-subset.eot?12057408');
-    src: url('/assets/fonts/entypo-subset-slick/entypo-subset.eot?12057408#iefix') format('embedded-opentype'),
-         url('/assets/fonts/entypo-subset-slick/entypo-subset.woff2?12057408') format('woff2'),
-         url('/assets/fonts/entypo-subset-slick/entypo-subset.woff?12057408') format('woff'),
-         url('/assets/fonts/entypo-subset-slick/entypo-subset.ttf?12057408') format('truetype'),
-         url('/assets/fonts/entypo-subset-slick/entypo-subset.svg?12057408#entypo-subset') format('svg');
+    src: url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.eot?12057408');
+    src: url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.eot?12057408#iefix') format('embedded-opentype'),
+         url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.woff2?12057408') format('woff2'),
+         url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.woff?12057408') format('woff'),
+         url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.ttf?12057408') format('truetype'),
+         url('/2018/assets/fonts/entypo-subset-slick/entypo-subset.svg?12057408#entypo-subset') format('svg');
     font-weight: normal;
     font-style: normal;
   }

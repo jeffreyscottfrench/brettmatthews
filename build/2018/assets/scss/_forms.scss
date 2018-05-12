@@ -45,7 +45,7 @@ form input[type=checkbox]:focus + label.checkbox-label {
 
 .styled-select {
   overflow: hidden;
-  background: url(http://localhost:7000/images/arrow-down-contact.png) no-repeat right;
+  background: url('/2018/images/arrow-down-contact.png') no-repeat right;
   & select {
     background: transparent;
     max-width: 100%;
@@ -91,7 +91,7 @@ form input[type=checkbox]:focus + label.checkbox-label {
   	background-position: 0 -15px;
   }
   & .checkbox-label {
-  	background-image:url(http://localhost:7000/images/custom-checkbox-lite-x-gray.png);
+  	background-image:url('/2018/images/custom-checkbox-lite-x-gray.png');
   }
   & label {
   	display: block;
