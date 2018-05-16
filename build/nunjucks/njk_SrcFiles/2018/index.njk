@@ -1,9 +1,11 @@
 {% extends "layout.njk" %}
 
+{% set content_special_class %}homepage{% endset %}
+
 {% block content %}
   <section class="content">
 
-    <div class="flex-box container-slideshow bm-slideshow-index">
+    <div class="container-slideshow bm-slideshow-index">
 
       <div class="container-image">
         <a href="/2018/preview/index.html#&gid=1&pid=8" title="">
@@ -117,33 +119,19 @@
       // initiate slick slider
       $('.bm-slideshow-index').slick({
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 0,
+        pauseOnHover: false,
+        centerMode: false,
+        slidesToShow: 1,
         fade: false,
-        speed: 500,
-        easing: 'swing',
-        cssEase: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+        speed: 15000,
+        easing: 'linear',
+        cssEase: 'cubic-bezier(0, 0, 1, 1)',
         arrows: false,
         lazyload: 'ondemand',
         mobileFirst: true,
         touchMove: true
       });
-
-      /* look for data for timing on each slide in slideshows */
-      var cs = $('.container-slideshow'),
-          holdTime;
-      cs.on('init',
-        function(event, slick){
-          holdTime = $('.slick-slide').get(0).dataset.time;
-          cs.slick("setOption", "autoplaySpeed", holdTime)
-        }
-      );
-      cs.on('afterChange',
-        function(e, slick){
-          var curr = cs.slick('slickCurrentSlide');
-          holdTime = $('.slick-slide').get(curr).dataset.time;
-          cs.slick("setOption", "autoplaySpeed", holdTime)
-        }
-      );
     });
   </script>
 {% endblock %}

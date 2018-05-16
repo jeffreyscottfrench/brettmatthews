@@ -54,3 +54,5 @@ close
 - [x] commit and push to Github
 
 - [x] close
+
+Use npm package exif-js to extract image exif data at build time.
