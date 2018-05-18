@@ -121,6 +121,7 @@ var uglify       = require('gulp-uglify'); // Minifies JS files
 
 // Image realted plugins.
 var imagemin     = require('gulp-imagemin'); // Minify PNG, JPEG, GIF and SVG images with imagemin.
+//var EXIF         = require('exif-js'); // Read exif data from image files
 
 // Nunjucks related plugins.
 var nunjucksRender = require('gulp-nunjucks-render');
@@ -139,6 +140,9 @@ var symlink      = require('gulp-sym'); // Create a shortcut reference instead o
 var newer        = require('gulp-newer');
 var del          = require('del');
 var path         = require('path');
+var through      = require('through2');
+var fileList     = require('gulp-filelist');
+var filenames    = require('gulp-filenames');
 var data         = require('gulp-data'); // Attach data from outside source
 var lazypipe     = require('lazypipe');
 var runSequence  = require('run-sequence');
@@ -244,8 +248,8 @@ gulp.task('json-test', function() {
 
 
 gulp.task('json', function() {
-  return gulp.src('./build/nunjucks/njk_SrcFiles/**/*.nunjucks')
-  .pipe(data(getJsonData))
+  return gulp.src('./build/2018/images/filelist.json')
+  .pipe(data())
   // Do stuff with the data here or just send it on down the pipe
   .pipe(nunjucksRender({
     path: ['./build/nunjucks/templates']
@@ -379,6 +383,22 @@ gulp.task( 'customJS', function() {
         return 'TASK: "customJS" Completed! 💯';
       }
     }) );
+});
+
+/**
+ * Task: imageBased
+ *
+ * This task does the following:
+ *    1. Gets the source of images raw folder
+ *    2. Make an array from filenames
+ *
+ */
+gulp.task( 'imageBased', function() {
+  gulp.src( imagesSRC )
+    .pipe( filter( '**/*.jpg'))
+    .pipe( fileList('filelist.json', {absolute: true, removeExtensions: true}))
+    .pipe( filenames('images'))
+  .pipe(gulp.dest( imagesDestination ));
 });
 
 /**
