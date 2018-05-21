@@ -121,6 +121,8 @@ var uglify       = require('gulp-uglify'); // Minifies JS files
 
 // Image realted plugins.
 var imagemin     = require('gulp-imagemin'); // Minify PNG, JPEG, GIF and SVG images with imagemin.
+var imageminJpegOptim = require('imagemin-jpegoptim');
+var imageResize  = require('gulp-image-resize'); // Resize using ImageMagick
 //var EXIF         = require('exif-js'); // Read exif data from image files
 
 // Nunjucks related plugins.
@@ -141,6 +143,8 @@ var newer        = require('gulp-newer');
 var del          = require('del');
 var path         = require('path');
 var through      = require('through2');
+var parallel     = require('concurrent-transform');
+var os           = require('os');
 var fileList     = require('gulp-filelist');
 var filenames    = require('gulp-filenames');
 var data         = require('gulp-data'); // Attach data from outside source
@@ -230,6 +234,37 @@ gulp.task('nunjucks', function(){
   .pipe(gulp.dest('./build'))
 });
 
+/**
+ * Build a single page for every jpg image processed and added to image-list.json
+ * - todo: make other necessary data from image-list.json
+ * - todo: get image list data into index.njk for gallery thumbs
+ */
+let buildPagesTasks = [];
+
+const imageList = Array.from(
+  require('./build/2018/images/image-list.json'));
+const imageRefs = imageList.map(imageRef => {
+  return imageRef.replace(/^.*\/raw\//, '');
+});
+imageRefs.forEach((imageRef) => {
+  let buildPageTask = 'building_page_for_'+imageRef;
+  gulp.task(buildPageTask, function(){
+    gulp.src('./build/nunjucks/njk_SrcFiles/2018/single.njk')
+      .pipe(nunjucksRender({
+        path: './build/nunjucks/templates',
+        data: {
+          image_path: '/2018/images/'+imageRef
+        }
+      }))
+      .pipe( rename(function(path) {
+        path.basename = imageRef;
+      }))
+    .pipe(gulp.dest('./build/2018/'));
+  })
+  buildPagesTasks.push(buildPageTask);
+});
+gulp.task('buildPagesFromImages', buildPagesTasks);
+
 /*
   Get data via JSON file, keyed on filename.
 */
@@ -237,18 +272,8 @@ var getJsonData = function(file) {
   return require('./build/nunjucks/njk_SrcFiles//**/' + path.basename(file.path));
 };
 
-gulp.task('json-test', function() {
-  return gulp.src('./build/nunjucks/njk_SrcFiles/**/*.+(json|html)')
-    .pipe(data(require('./build/nunjucks/njk_SrcFiles/**/' + path.basename(file.path))))
-    .pipe(nunjucksRender({
-      path: ['./build/nunjucks/templates']
-    }))
-    .pipe(gulp.dest('./build'));
-});
-
-
 gulp.task('json', function() {
-  return gulp.src('./build/2018/images/filelist.json')
+  return gulp.src('./build/2018/images/image-list.json')
   .pipe(data())
   // Do stuff with the data here or just send it on down the pipe
   .pipe(nunjucksRender({
@@ -386,20 +411,67 @@ gulp.task( 'customJS', function() {
 });
 
 /**
- * Task: imageBased
+ * Task: imageList
  *
  * This task does the following:
  *    1. Gets the source of images raw folder
  *    2. Make an array from filenames
+ *    3. Stores filenames in gulp filenam cache under 'images'
  *
  */
-gulp.task( 'imageBased', function() {
+gulp.task( 'imageList', function() {
   gulp.src( imagesSRC )
     .pipe( filter( '**/*.jpg'))
-    .pipe( fileList('filelist.json', {absolute: true, removeExtensions: true}))
+    .pipe( fileList('image-list.json', {absolute: true, removeExtensions: true}))
     .pipe( filenames('images'))
-  .pipe(gulp.dest( imagesDestination ));
+  .pipe(gulp.dest( imagesDestination ))
 });
+
+/** Task : resizeImages
+ *
+ * This task does the following:
+ *    1. Create resized image files for each responsive image size you declare in the array.
+ *    2. Optimize the resized image
+ *    3. Rename with proper basename suffix for px width
+ *
+ *   todo: make one for dealing with thumbnails
+*/
+
+let resizeImageTasks = [];
+
+[640,960,1140,1340,1500,1750,2000,2250,2500].forEach(function(size){
+  var resizeImageTask = 'resize_' + size;
+  gulp.task(resizeImageTask, function(){
+    return gulp.src( imagesSRC )
+      .pipe( filter('**/*.jpg') )
+      .pipe( parallel(
+        imageResize({
+          imageMagick: true,
+          width: size,
+          crop: false,
+          upscale: false
+        }),
+        os.cpus().length
+      ))
+      .pipe( rename( function(path) {
+          path.basename += '-' + size +'w';
+      }))
+      .pipe( imagemin([
+        imageminJpegOptim({
+          max: 80,
+          stripAll: false,
+          stripCom: true,
+          stripExif: true,
+          stripIptc: true,
+          stripXmp: true,
+          stripIcc: false
+        })
+      ]))
+    .pipe(gulp.dest( imagesDestination ))
+  });
+  resizeImageTasks.push(resizeImageTask);
+});
+gulp.task('resizeImages', resizeImageTasks);
 
 /**
  * Task: `images`.
@@ -424,7 +496,6 @@ gulp.task( 'images', function() {
          svgoPlugins: [{removeViewBox: false}]
        } ) )
    .pipe(gulp.dest( imagesDestination ))
-   .pipe( notify( { message: 'TASK: "images" Completed! 💯', onLast: true } ) );
 });
 
 /**
