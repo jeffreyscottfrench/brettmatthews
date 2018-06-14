@@ -1,0 +1,24 @@
+{% extends "layout.njk" %}
+
+{% block headinsert %}
+    {% include "partials/pswp_styles.njk" %}
+{% endblock %}
+
+{% set content_special_class %}gallery-page{% endset %}
+
+{% block content %}
+    <section>
+      <div class="gallery category js-pswp_gallery" id="preview">
+
+        {%- import "_images.njk" as images -%}
+
+        {{ images.thmb(gallery_images, div_class='thmb-sm container-image') }}
+
+
+      </div>
+    </section>
+
+    {% include "partials/pswp.njk" %}
+
+{% endblock %}
+{% block scripts %}{% include "partials/pswp_scripts.njk" %}{% endblock %}

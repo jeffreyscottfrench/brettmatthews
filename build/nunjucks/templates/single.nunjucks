@@ -1,0 +1,34 @@
+{% extends "layout.njk" %}
+
+{% block headinsert %}{% endblock %}
+
+{% set content_special_class %}{{content_class}}{% endset %}
+
+{% block content %}
+    <section class="{{ section_class }}">
+
+      <div class="container-image image-fit">
+
+          <picture>
+            <img alt="{{ image_altTag }}"
+                  {% include "partials/ri-full-width.njk" %}>
+          </picture>
+
+        <a class="portfolio-nav prev a-prev" title="go to previous" href="{{ prev_page }}">
+          <div class="portfolio-arrow prev a-prev" id="portfolio-arrow-prev"><img class="arrow prev" src="/2018/images/arrow-left.png" alt="previous image arrow"></div>
+        </a><!-- close portflio-prev -->
+        <a class="portfolio-nav next a-next" title="go to next" href="{{ next_page }}">
+          <div class="portfolio-arrow next" id="portfolio-arrow-next"><img class="arrow next" src="/2018/images/arrow-right.png" alt="next image arrow"></div>
+        </a><!-- close portflio-next -->
+        <a class="container-thumb" title="go to thumbnails" href="index.html"><img src="/2018/images/thmb-link.svg" alt="thumbnail page image"></a>
+    </div>
+
+    <script>
+      window.onload = function() {
+        window.location.replace("{{image_pageHref}}#&gid={{image_pswpGuid}}&pid={{image_pswpPuid}}");
+      }
+    </script>
+
+    </section>
+
+{% endblock %}

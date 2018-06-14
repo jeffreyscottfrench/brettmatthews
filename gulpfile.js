@@ -123,7 +123,8 @@ var uglify       = require('gulp-uglify'); // Minifies JS files
 var imagemin     = require('gulp-imagemin'); // Minify PNG, JPEG, GIF and SVG images with imagemin.
 var imageminJpegOptim = require('imagemin-jpegoptim');
 var imageResize  = require('gulp-image-resize'); // Resize using ImageMagick
-//var EXIF         = require('exif-js'); // Read exif data from image files
+var exif         = require('exiftool');
+var fs           = require('fs');
 
 // Nunjucks related plugins.
 var nunjucksRender = require('gulp-nunjucks-render');
@@ -236,37 +237,293 @@ gulp.task('nunjucks', function(){
 
 /**
  * Build a single page for every jpg image processed and added to image-list.json
- * - todo: make other necessary data from image-list.json
- * - todo: get image list data into index.njk for gallery thumbs
  */
 let buildPagesTasks = [];
+let buildGalleriesTasks = [];
 
-const imageList = Array.from(
+let fullImageList = Array.from(
   require('./build/2018/images/image-list.json'));
-const imageRefs = imageList.map(imageRef => {
+let allImageRefs = fullImageList.map(imageRef => {
   return imageRef.replace(/^.*\/raw\//, '');
 });
-imageRefs.forEach((imageRef) => {
-  let buildPageTask = 'building_page_for_'+imageRef;
-  gulp.task(buildPageTask, function(){
-    gulp.src('./build/nunjucks/njk_SrcFiles/2018/single.njk')
+// sort image-list array by directory
+
+let gallerys = {};
+allImageRefs.sort().forEach((imageRef) => {
+  let fullRef = imageRef;
+  let dir = imageRef.split('/', 1)[0];
+  let basename = imageRef.split('/').pop();
+  let img_seq = basename.match(/\d{1,3}/)[0];
+  imageRef = {};
+  imageRef._seq = img_seq;
+  imageRef.dir = dir;
+  imageRef.basename = basename;
+  imageRef.fullRef = fullRef;
+
+  // turn directorys into gallerys and distribute all image references appropriately
+  if (gallerys[dir]) {
+    gallerys[dir].push(imageRef);
+  } else {
+    gallerys[dir] = new Array();
+    gallerys[dir].push(imageRef);
+  }
+});
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
+async function forEachGallery() {
+
+  await asyncForEach(Object.keys(gallerys), async (galleryKey) => {
+
+    gallerys[galleryKey].sort();
+    let forEachImage = async () => {
+
+      await asyncForEach(gallerys[galleryKey], async (img) => {
+
+        // current image src ('/2018/images' + path )
+        img.image_path = '/2018/images/' + img.dir + '/' + img.basename;
+
+        let imageRefParts = img.fullRef.split(/\//);
+        img.image_fileName = imageRefParts[imageRefParts.length - 1];
+
+        // current image alt (remove leading sequence numbers, evaluate first letter for vowel, split basename on -)
+        let aOrAn = img.image_fileName.replace(/^\d{1,3}-/,'').charAt(0).match(/[AEIOUaeiou]/) != null ? 'an ' : 'a ';
+        img.image_altTag = 'An image of ' + aOrAn + img.image_fileName.replace(/^\d{1,3}-/,'').split(/-/).join(' ') + '.';
+
+        // current image page href ('/2018/' + path + '.html')
+        img.image_pageHref = '/2018/' + img.fullRef + '.html';
+
+
+        // previous image page href ('/2018/'subArrayItem[i - 1] + '.html')
+        let imgIndex = gallerys[galleryKey].indexOf(img);
+        let prevImagePath = imgIndex - 1 === -1 ? galleryKey +'/' : gallerys[galleryKey][imgIndex - 1].fullRef + '.html';
+        img.image_prevPageHref = '/2018/' + prevImagePath;
+
+        // // next image page href ('/2018/'subArrayItem[i + 1] + '.html')
+        let nextImagePath = imgIndex + 1 >= gallerys[galleryKey].length ? galleryKey +'/' : gallerys[galleryKey][imgIndex + 1].fullRef + '.html';
+        img.image_nextPageHref = '/2018/' + nextImagePath;
+
+
+        // current image pswp gallery hash href ( current href + '#&gid='+(subArray's.index + 1)+'&pid='+(subArrayItem's.index + 1))
+        img.image_pswpGuid = Object.keys(gallerys).indexOf(galleryKey) + 1;
+        img.image_pswpPuid = gallerys[galleryKey].indexOf(img) + 1;
+        img.image_pswpHash = img.image_pageHref + '#&gid=' + img.image_pswpGuid + '&pid=' + img.image_pswpPuid;
+
+
+        // go get the exif data
+        let fileSource = './build/2018/assets/img/raw/' + img.fullRef + '.jpg';
+        let exifData = {};
+        async function getExif() {
+          let exifPromise = new Promise((resolve, reject) => { fs.readFile(fileSource, async function (err, data) {
+            if (err) {
+              throw err;
+            }
+            else {
+              let promise = new Promise((resolve, reject) => { exif.metadata(data, ['-Caption-Abstract', '-City', '-Sub-location', '-Keywords'], function (err, metadata) {
+                if (err) {
+                  throw err;
+                }
+                else {
+                  resolve( metadata );
+                }
+              })});
+              let metadata = await promise;
+              resolve( metadata );
+            }
+          })});
+          let fileMetaData = await exifPromise;
+          return fileMetaData;
+        }
+
+        async function metaData() {
+          let fileMetaData = await getExif();
+
+          // current image page title from caption
+          img.exifData_caption = fileMetaData['caption-abstract'];
+          img.exifData_city = fileMetaData['city'];
+          img.exifData_subLocation = fileMetaData['sub-location'];
+
+          // current image page keywords
+          img.exifData_keywords = fileMetaData['keywords'];
+
+          return img;
+        }
+        await metaData();
+
+        let buildPageTask = 'Building Page For: img_' + img._seq + ' in '+ img.dir;
+        gulp.task(buildPageTask, function(){
+          gulp.src('./build/nunjucks/templates/single.nunjucks')
+          .pipe(nunjucksRender({
+            path: './build/nunjucks/templates',
+            data: {
+              image_path: img.image_path,
+              image_altTag: img.image_altTag,
+              image_pageHref: img.image_pageHref,
+              image_pswpGuid: img.image_pswpGuid,
+              image_pswpPuid: img.image_pswpPuid,
+              image_pswpHash: img.image_pswpHash,
+              page_keywords: ', ' + img.exifData_keywords,
+              page_title: ' | ' + img.exifData_caption,
+              prev_page: img.image_prevPageHref,
+              next_page: img.image_nextPageHref
+            }
+          }))
+          .pipe( rename(function(path) {
+            path.basename = img.fullRef;
+          }))
+          .pipe(gulp.dest('./build/2018/'));
+        })
+
+        buildPagesTasks.push(buildPageTask);
+      });
+    };
+    await forEachImage();
+
+    let buildGalleryTask = 'Building Gallery For: '+ galleryKey;
+    gulp.task(buildGalleryTask, function () {
+      gulp.src('./build/nunjucks/templates/gallery.nunjucks')
       .pipe(nunjucksRender({
         path: './build/nunjucks/templates',
         data: {
-          image_path: '/2018/images/'+imageRef
+          gallery_images: gallerys[galleryKey],
+          gallery_slides_script: '/2018/' + galleryKey + '/'+ galleryKey + '-slides.js'
         }
       }))
       .pipe( rename(function(path) {
-        path.basename = imageRef;
+        path.basename = galleryKey + '/index';
       }))
-    .pipe(gulp.dest('./build/2018/'));
+      .pipe(gulp.dest('./build/2018/'));
+    })
+    buildGalleriesTasks.push(buildGalleryTask);
   })
-  buildPagesTasks.push(buildPageTask);
+}
+
+gulp.task('buildFromImages', async function() {
+  await forEachGallery();
+  runSequence(buildPagesTasks, buildGalleriesTasks, 'generateSlides');
 });
-gulp.task('buildPagesFromImages', buildPagesTasks);
+
+/**
+ * Build PSWP slide list from resized images per gallery
+ */
+
+let slideGalleries = {};
+let forEachSlideRef = async () => {
+  let allSlideRefs = Array.from(require('./build/2018/images/pswp-slide-list.json'));
+  let slideRefs = allSlideRefs.map(slideRef => {
+    return slideRef.replace(/^.*\/build\//, '');
+  });
+
+  await asyncForEach(slideRefs, async (slideRef) => {
+
+    let fullRef = slideRef;
+    let dir = slideRef.split('/').slice(-2,-1).join();
+    let basename = slideRef.split('/').pop();
+    let img_seq = basename.match(/\d{1,3}/)[0];
+    let img_size = basename.match(/\d{1,4}w/)[0].match(/\d{1,4}/)[0];
+    slideRef = {};
+    slideRef.size = img_size;
+    slideRef.basename = basename;
+    slideRef._seq = img_seq;
+    slideRef.dir = dir;
+    slideRef.fullRef = fullRef;
+
+    let fileSource = './build/' + fullRef;
+    async function getExif() {
+      let exifPromise = new Promise((resolve, reject) => { fs.readFile(fileSource, async function (err, data) {
+        if (err) {
+          throw err;
+        }
+        else {
+          let promise = new Promise((resolve, reject) => { exif.metadata(data, ['-ImageWidth', '-ImageHeight'], function (err, metadata) {
+            if (err) {
+              throw err;
+            }
+            else {
+              resolve( metadata );
+            }
+          })});
+          let metadata = await promise;
+          resolve( metadata );
+        }
+      })});
+      let fileMetaData = await exifPromise;
+      return fileMetaData;
+    }
+
+    async function metaData() {
+      let fileMetaData = await getExif();
+
+      // current image page title from caption
+      slideRef.width = fileMetaData['imageWidth'];
+      slideRef.height = fileMetaData['imageHeight'];
+
+      return slideRef;
+    }
+    await metaData();
+
+    // turn directorys into gallerys and distribute all slide references appropriately
+
+    if (slideGalleries[dir] && slideGalleries[dir][img_seq]) {
+      slideGalleries[dir][img_seq].push(slideRef);
+    } else if (slideGalleries[dir]) {
+      slideGalleries[dir][img_seq] = new Array();
+      slideGalleries[dir][img_seq].push(slideRef);
+    } else {
+      slideGalleries[dir] = new Object();
+      slideGalleries[dir][img_seq] = new Array();
+      slideGalleries[dir][img_seq].push(slideRef);
+    }
+  });
+}
+function makeEachGallerySlideList () {
+  Object.keys(slideGalleries).forEach((slideGalleryKey) => {
+    let items = [];
+
+    Object.keys(slideGalleries[slideGalleryKey]).sort().forEach((slideKey) => {
+      let _slide = slideGalleries[slideGalleryKey][slideKey];
+      let slideObj = {};
+      slideObj.slide = Object.keys(slideGalleries[slideGalleryKey]).sort().indexOf(slideKey) + 1;
+      _slide.sort().forEach((slideRef) => {
+        let slideName = ('_' + slideRef.size + 'Image');
+        slideObj[slideName] = {};
+        slideObj[slideName].src = '/' + slideRef.fullRef;
+        slideObj[slideName].w = slideRef.width;
+        slideObj[slideName].h = slideRef.height;
+      })
+      items.push(slideObj);
+    });
+
+    let oneSlideSet = Object.keys(slideGalleries[slideGalleryKey])[0];
+    let oneSlide = slideGalleries[slideGalleryKey][oneSlideSet][0];
+    let fileName = './build/' + oneSlide.fullRef.split('/')[0] + '/' + oneSlide.dir + '/' + slideGalleryKey + '-slides.js';
+    let re1 = /:"\//g;
+    let re2 = /(\.\w{3})"/g;
+    let re3 = /"/g;
+    let itemsString = JSON.stringify(items).replace(re1,`: '/`).replace(re2,`$1'`).replace(re3,' ');
+    let fileData = 'var items = ' + itemsString + ';';
+
+    fs.writeFile(
+      fileName,
+      fileData,
+      (err) => {
+        if (err) throw err;
+    })
+
+  })
+}
+gulp.task('generateSlides', async function(){
+  await forEachSlideRef();
+  makeEachGallerySlideList();
+})
+
 
 /*
-  Get data via JSON file, keyed on filename.
+Get data via JSON file, keyed on filename.
 */
 var getJsonData = function(file) {
   return require('./build/nunjucks/njk_SrcFiles//**/' + path.basename(file.path));
@@ -416,7 +673,7 @@ gulp.task( 'customJS', function() {
  * This task does the following:
  *    1. Gets the source of images raw folder
  *    2. Make an array from filenames
- *    3. Stores filenames in gulp filenam cache under 'images'
+ *    3. Stores filenames in gulp filename cache under 'images'
  *
  */
 gulp.task( 'imageList', function() {
@@ -424,6 +681,12 @@ gulp.task( 'imageList', function() {
     .pipe( filter( '**/*.jpg'))
     .pipe( fileList('image-list.json', {absolute: true, removeExtensions: true}))
     .pipe( filenames('images'))
+  .pipe(gulp.dest( imagesDestination ))
+});
+
+gulp.task( 'pswpSlideList', function() {
+  gulp.src( './build/2018/images/**/*w.jpg' )
+    .pipe( fileList('pswp-slide-list.json', {absolute: true, removeExtensions: false}))
   .pipe(gulp.dest( imagesDestination ))
 });
 
@@ -473,6 +736,10 @@ let resizeImageTasks = [];
 });
 gulp.task('resizeImages', resizeImageTasks);
 
+gulp.task('processImages', function(){
+  runSequence('imageList', 'resizeImages', 'pswpSlideList');
+})
+
 /**
  * Task: `images`.
  *
@@ -489,6 +756,7 @@ gulp.task('resizeImages', resizeImageTasks);
 gulp.task( 'images', function() {
  gulp.src( imagesSRC )
    .pipe(newer( imagesDestination ))
+   .pipe(filter('**/*.{png,gif,svg}'))
    .pipe( imagemin( {
          progressive: true,
          optimizationLevel: 1, // 0-7 low-high
@@ -600,7 +868,7 @@ gulp.task('build', function(){
 gulp.task('watch', function(){
   // Rebuild compiled html files on nunjuck file changes and reload.
   gulp.watch( projectNunjucksWatchFiles, function(){
-    runSequence('nunjucks', 'json', browserSync.reload);
+    runSequence('nunjucks', browserSync.reload);
   });
   // Reload on PHP file changes.
   // gulp.watch( projectPHPWatchFiles ).on('change', browserSync.reload );
@@ -622,5 +890,5 @@ gulp.task('watch', function(){
 
 // Standard
 gulp.task( 'default', function(){
-  runSequence('nunjucks', 'json', 'styles', 'vendorsJs', 'customJS', 'images', 'browser-sync', 'watch')
+  runSequence('nunjucks', 'styles', 'vendorsJs', 'customJS', 'images', 'browser-sync', 'watch')
 });
