@@ -34,7 +34,7 @@
  var projectURL              = 'brettmatthews.dev'; // Project URL. Could be something like localhost:8888.
  var productURL              = './'; // Theme/Plugin URL. Leave it like it is, since our gulpfile.js lives in the root folder.
 
- // // Translation related for WP
+ // Translation related for WP
  // var text_domain             = 'ProjectURLBase'; // Your textdomain here.
  // var destFile                = 'ProjectURLBase.pot'; // Name of the transalation file.
  // var packageName             = 'ProjectURLBase'; // Package name.
@@ -191,7 +191,7 @@ gulp.task( 'browser-sync', function() {
     port: 3000,
 
     // Use a specific browser or multiple browsers ("google chrome" or multiple ["firefox", "safari technology preview"] ).
-    browser: ["google chrome", "firefox developer edition"]
+    browser: ["firefox developer edition", "safari technology preview", "google chrome"]
 
   } );
 });
@@ -218,7 +218,7 @@ gulp.task( 'browser-sync_proof', function() {
     port: 8888,
 
     // Use a specific browser or multiple browsers ("google chrome" or multiple ["firefox", "safari technology preview"] ).
-    browser: ["google chrome", "firefox developer edition"]
+    browser: ["firefox developer edition", "google chrome"]
 
   } );
 });
@@ -303,7 +303,7 @@ async function forEachGallery() {
         let prevImagePath = imgIndex - 1 === -1 ? galleryKey +'/' : gallerys[galleryKey][imgIndex - 1].fullRef + '.html';
         img.image_prevPageHref = '/2018/' + prevImagePath;
 
-        // // next image page href ('/2018/'subArrayItem[i + 1] + '.html')
+        // next image page href ('/2018/'subArrayItem[i + 1] + '.html')
         let nextImagePath = imgIndex + 1 >= gallerys[galleryKey].length ? galleryKey +'/' : gallerys[galleryKey][imgIndex + 1].fullRef + '.html';
         img.image_nextPageHref = '/2018/' + nextImagePath;
 
@@ -389,6 +389,7 @@ async function forEachGallery() {
       .pipe(nunjucksRender({
         path: './build/nunjucks/templates',
         data: {
+          gallery_key: galleryKey,
           gallery_images: gallerys[galleryKey],
           gallery_slides_script: '/2018/' + galleryKey + '/'+ galleryKey + '-slides.js'
         }
@@ -769,7 +770,7 @@ gulp.task( 'images', function() {
 /**
  * WP POT Translation File Generator.
  *
- * * This task does the following:
+ * This task does the following:
  *     1. Gets the source of all the PHP files
  *     2. Sort files in stream by path or any custom sort comparator
  *     3. Applies wpPot with the variable set at the top of this file

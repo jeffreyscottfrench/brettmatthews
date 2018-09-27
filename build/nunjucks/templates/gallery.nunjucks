@@ -8,7 +8,7 @@
 
 {% block content %}
     <section>
-      <div class="gallery category js-pswp_gallery" id="preview">
+      <div class="gallery category js-pswp_gallery" id="gallery-{{gallery_key}}">
 
         {%- import "_images.njk" as images -%}
 
