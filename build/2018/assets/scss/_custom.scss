@@ -17,21 +17,30 @@ body {
     margin: 0 $space;
   }
 }
-header, footer, nav, .main {
+footer, .main {
   position: relative;
   @include flexbox;
 }
 
-header, footer {
+footer {
   @include flex-flow(row wrap);
 }
 header {
-  @include flex-just(space-between);
-  @include align-items(flex-end);
-  padding: 10px 0 10px 10px; // create space for contents to bleed over edge
-  margin: -10px 0 -10px -10px; // visually align apparent edges
-  overflow-y: visible;
-  z-index: 500;
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  z-index: 5000;
+  @include devBorder();
+  & > * {
+    @include devBorder(green);
+    & > * {
+      @include devBorder(red);
+    }
+  }
 }
 
 footer {
@@ -60,83 +69,6 @@ footer {
       @include flex(0,1,auto);
       width: auto;
     }
-  }
-}
-nav {
-  @include flex(1, 1, auto);
-  @include flex-just(space-between);
-  @include align-items(flex-start);
-  @include flex-wrap(wrap);
-  @include order(10);
-  padding: 0;
-  margin: 0;
-  border-bottom: $border-primary;
-  z-index: 900;
-  @media (min-width: $break-small) {
-    @include flex(1, 1, auto);
-    margin: auto 0 0 auto;
-    vertical-align: bottom;
-    border: 0;
-  }
-  @media (min-width: $break-large) {
-    @include order();
-    @include flex(0, 1, auto);
-    @include flex-wrap(nowrap);
-    @include flex-just(flex-start);
-    @include align-items(flex-end);
-    margin: auto auto 0;
-  }
-  @media (min-width: $break-xlarge) {
-    @include flex(1, 1, auto);
-    max-width: 65%;
-  }
-}
-a.nav-item {
-  @include flex(0, 1, 100%);
-  margin: 0 0 0 auto;
-  padding: 10px 5px;
-  text-transform: uppercase;
-  text-align: center;
-  @media (min-width: $break-small) {
-    @include flex(1, 1, auto);
-    margin: 0;
-  }
-  @media (min-width: $break-large) {
-    @include flex(0, 1, auto);
-    margin: 0 0 0 20px;
-    padding: 5px 0;
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-  @media (min-width: $break-xlarge) {
-    margin: 0 0 0 5%;
-  }
-}
-
-.container-headerLogo {
-  @include flex(0, 1, 45%);
-  width: auto;
-  margin: 0;
-  z-index: 1000;
-  @media (min-width: $break-small) {
-    @include flex(0, 1, auto);
-    margin: 0;
-  }
-  @media (min-width: $break-mid) {
-    margin-left: -10px;
-  }
-  & a {
-    display: block;
-    position: relative;
-    width: auto;
-    max-height: 50px;
-    margin: 0 0 -5px 0;
-  }
-  & a img.logo-bm {
-    margin: 0;
-    max-height: 50px;
-    width: auto;
   }
 }
 

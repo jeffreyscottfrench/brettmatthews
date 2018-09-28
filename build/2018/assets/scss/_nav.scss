@@ -1,0 +1,283 @@
+nav.nav__site {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: stretch;
+  align-content: stretch;
+  background-color: $white;
+
+  body.js__menu--open & {
+    overflow-y: auto;
+    @media screen and (min-width: $tablet_and_up) {
+      position: relative;
+      height: auto;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: flex-start;
+    }
+  }
+
+  @media screen and (min-width: $phone_landscape_and_up) {
+    bottom: auto;
+    top: 0;
+    flex-flow: row nowrap;
+  }
+  @media screen and (min-width: $tablet_and_up) {
+    position: relative;
+    height: auto;
+    width: 100%;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+
+  .js__shortScreen & {
+    overflow-y: scroll;
+    justify-content: flex-start;
+  }
+}
+
+nav.nav__mobile {
+  position: relative;
+  top: 0;
+  z-index: 8500;
+  background-color: $color-primary;
+  transition-property: top;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(1, 0, 0, 1);
+  transition-delay: 0;
+
+  body.js__menu--open & {
+    position: sticky;
+    top: calc(100vh - 40px);
+  }
+
+  @media screen and (min-width: $tablet_and_up) {
+    display: none;
+  }
+
+  & div.nav__mobile {
+    position: relative;
+    flex: 0 1 auto;
+    width: 100%;
+    height: 40px;
+    padding: 0 $space;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+
+  & a {
+    padding: 0;
+  }
+
+  & #home-mobile {
+    width: 75%;
+    flex-shrink: 0;
+    // @include devBorder();
+  }
+
+  & #contact-icon,
+  & #menu-button {
+    flex: 0 1 auto;
+    line-height: 0;
+    max-height: 20px;
+    & svg {
+      max-height: 20px;
+    }
+  }
+  & #menu-button {
+    transform: rotate(0);
+    transition-property: transform;
+    transition-duration: 200ms;
+    transition-timing-function: (1, 0, 0, 1);
+    transition-delay: 0;
+  }
+  .js__menu--open & #menu-button {
+    transform: rotate(135deg);
+  }
+}
+
+nav.nav__site > div {
+  flex: 0 1 auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  @media screen and (min-width: $phone_landscape_and_up) {
+    flex: 1 1 auto;
+    width: 50%;
+    &.nav__secondary,
+    &.nav__primary {
+      margin-bottom: $space4x;
+    }
+  }
+  @media screen and (min-width: $tablet_and_up) {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-end;
+    align-items: center;
+    width: 100%;
+    &.nav__secondary,
+    &.nav__primary {
+      margin-bottom: 0;
+    }
+  }
+  @media screen and (min-width: $desktop_and_up) {
+    padding: 0;
+    align-items: baseline;
+  }
+}
+div.nav__secondary {
+  // margin-bottom: $space4x;
+}
+
+nav > div > a,
+aside nav > div > a,
+.aside nav > div > a {
+  flex: 1 1 auto;
+}
+
+nav a {
+  padding: $space;
+  margin: 0;
+}
+
+nav.nav__site a {
+  flex: 1 1 auto;
+  padding: 8px 0;
+  width: 100%;
+
+  @media screen and (min-width: 400px) {
+    padding: $space 0;
+  }
+
+  @media screen and (min-width: $tablet_and_up) {
+    padding: $space 0;
+    width: auto;
+  }
+}
+nav.nav__site a.nav__left {
+  @media screen and (min-width: $tablet_and_up) {
+    align-self: flex-start;
+  }
+}
+nav.nav__site a.nav__right {
+  @media screen and (min-width: $tablet_and_up) {
+    align-self: flex-end;
+  }
+}
+
+
+
+
+
+div.nav__pageNav,
+div.nav__sectionNav {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  padding: 0 $space2x;
+  @media screen and (min-width: $tablet_and_up) {
+    padding: 0;
+  }
+
+  & h1.title__page {
+    display: block;
+    width: 100%;
+    flex: 0 1 auto;
+    margin: 0 auto;
+  }
+
+  & div {
+    flex: 0 1 auto;
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: center;
+    margin: $space4x auto 0;
+  }
+
+  & a {
+    display: block;
+    padding: $space-half $space;
+  }
+}
+
+div.nav__sectionNav {
+  padding-bottom: $space2x;
+  @media screen and (min-width: $phone_landscape_and_up) and (max-width: $tablet_and_up) {
+    justify-content: space-around;
+  }
+  & a {
+    padding: $space $space2x;
+    border-left: none;
+    @media screen and (min-width: $tablet_and_up) {
+      padding: 0 $space2x;
+      border-left: 1px solid $color-primary;
+      &:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+div.nav__pageNav--toTop {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+}
+
+main.portfolio div.nav__portfolio {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+
+  & h1.title__page {
+    display: block;
+    width: 100%;
+    flex: 0 1 auto;
+    margin: 0 auto;
+  }
+
+  & div {
+    flex: 0 1 auto;
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  & a {
+    display: block;
+    padding: $space;
+  }
+}

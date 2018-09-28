@@ -1,0 +1,22 @@
+.container-headerLogo {
+  position: absolute;
+  width: 100%;
+  z-index: 5000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  & a.logo__img {
+    flex: 1 1 auto;
+    & img {
+      margin: 0;
+      max-height: 60px;
+      width: auto;
+    }
+  }
+  & a.logo__text {
+    flex: 1 1 auto;
+    letter-spacing: 2px;
+  }
+}

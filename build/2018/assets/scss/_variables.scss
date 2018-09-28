@@ -11,6 +11,11 @@ $font-icon: "Entypo-subset", sans-serif; // Icons
 $color-primary: #bbbbbb;
 $color-secondary: #666666;
 $color-terciary: #000000;
+$black: #121212;
+$gray-dk: #444444;
+$gray-md: #999999;
+$gray-lt: #dddddd;
+$white: #ffffff;
 
 $border-primary: 1px solid $color-primary;
 $border-secondary: 1px solid $color-secondary;
@@ -22,6 +27,11 @@ $break-large: 1024px;
 $break-xlarge: 1146px; // 1090px content + 5% for margins
 $break-giant: 1500px;  // Excludes most laptops
 $break-max: 2000px;  // Ultra-large displays
+
+$phone_landscape_and_up: 520px;
+$tablet_and_up: 750px;
+$tablet_and_down: 1023px;
+$desktop_and_up: 1024px;
 
 $space: 20px;
 $space-half: $space / 2;
