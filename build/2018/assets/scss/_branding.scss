@@ -1,22 +1,35 @@
 .container-headerLogo {
-  position: absolute;
-  width: 100%;
-  z-index: 5000;
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+  z-index: 5100;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: center;
+  align-content: flex-start;
   align-items: center;
+
+  @media screen and (min-width: $tablet_and_up) {
+
+  }
+
+
   & a.logo__img {
     flex: 1 1 auto;
     & img {
       margin: 0;
-      max-height: 60px;
+      max-height: 65px;
       width: auto;
+      padding-right: 3%; // visually compensates for ligature on B
     }
   }
   & a.logo__text {
     flex: 1 1 auto;
-    letter-spacing: 2px;
+    margin-top: -2px; // aligns to
+    padding-bottom: $space-half;
+    font-size: 14px;
+    line-height: normal;
+    text-align: center;
+    color: $gray-md;
   }
 }

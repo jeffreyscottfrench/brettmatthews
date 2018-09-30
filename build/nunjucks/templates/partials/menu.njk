@@ -1,40 +1,53 @@
 <nav class="nav__mobile" id="menu-mobile">
   <div class="nav__mobile">
     {% include "partials/social_follow.njk" %}
-    <a id="menu-button">MENU</a>
-    <a href="/2018/studio.html" id="pin-icon">
-      <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.3636 8.18182C16.3636 14.5455 8.18182 20 8.18182 20C8.18182 20 0 14.5455 0 8.18182C3.23348e-08 6.01187 0.86201 3.93079 2.3964 2.3964C3.93079 0.86201 6.01187 -1.35465e-08 8.18182 -1.35465e-08C10.3518 -1.35465e-08 12.4328 0.86201 13.9672 2.3964C15.5016 3.93079 16.3636 6.01187 16.3636 8.18182Z" fill="#AAAAAA"/>
-        <path d="M8.18186 10.9091C9.68809 10.9091 10.9091 9.68809 10.9091 8.18186C10.9091 6.67563 9.68809 5.45459 8.18186 5.45459C6.67563 5.45459 5.45459 6.67563 5.45459 8.18186C5.45459 9.68809 6.67563 10.9091 8.18186 10.9091Z" fill="white"/>
-      </svg>
-    </a>
-    <a href="/2018/contact.html" id="contact-icon">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.0061 15.214V18.0809C19.0072 18.3471 18.9527 18.6105 18.8461 18.8544C18.7394 19.0983 18.5831 19.3172 18.3869 19.4971C18.1908 19.677 17.9593 19.814 17.7071 19.8993C17.455 19.9845 17.1879 20.0162 16.9228 19.9923C13.9821 19.6727 11.1573 18.6679 8.67552 17.0584C6.3665 15.5912 4.40886 13.6335 2.94161 11.3245C1.32654 8.83138 0.321443 5.9929 0.00775666 3.03898C-0.0161246 2.77471 0.0152823 2.50836 0.0999775 2.2569C0.184673 2.00543 0.3208 1.77436 0.499694 1.57838C0.678587 1.38241 0.896327 1.22583 1.13905 1.11862C1.38177 1.01141 1.64416 0.955909 1.9095 0.955659H4.77646C5.24025 0.951094 5.68987 1.11533 6.04152 1.41775C6.39317 1.72017 6.62285 2.14014 6.68777 2.59938C6.80877 3.51687 7.03319 4.41773 7.35672 5.28476C7.4853 5.62681 7.51313 5.99855 7.43691 6.35593C7.36069 6.71332 7.18362 7.04136 6.92668 7.30119L5.713 8.51487C7.07342 10.9074 9.05439 12.8884 11.4469 14.2488L12.6606 13.0351C12.9204 12.7782 13.2485 12.6011 13.6058 12.5249C13.9632 12.4487 14.335 12.4765 14.677 12.6051C15.5441 12.9286 16.4449 13.153 17.3624 13.274C17.8266 13.3395 18.2506 13.5733 18.5537 13.931C18.8567 14.2887 19.0177 14.7453 19.0061 15.214Z" fill="#AAAAAA"/>
-      </svg>
-    </a>
-  </div>
-</nav>
-
-<nav class="nav__site">
-  <div class="nav__primary"><!-- menu top row -->
-    <a id="menu-expander" class="nav-item nav__left">
-      <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <a id="menu-button">
+      <svg viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="5.5" x2="5.5" y2="11" stroke="#AAAAAA"/>
         <line y1="5.5" x2="11" y2="5.5" stroke="#AAAAAA"/>
       </svg>
     </a>
-    <a id="menu_weddings" class="nav-item nav__left" href="/2018/weddings/index.html">WEDDINGS</a>
-    <a id="menu_engagements" class="nav-item nav__left" href="/2018/engagements/index.html">ENGAGEMENTS</a>
+    <div class="container__icons">
+      <a class="icon__nav" href="/2018/studio.html" id="icon-pin">
+        <svg viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.3636 8.18182C16.3636 14.5455 8.18182 20 8.18182 20C8.18182 20 0 14.5455 0 8.18182C3.23348e-08 6.01187 0.86201 3.93079 2.3964 2.3964C3.93079 0.86201 6.01187 -1.35465e-08 8.18182 -1.35465e-08C10.3518 -1.35465e-08 12.4328 0.86201 13.9672 2.3964C15.5016 3.93079 16.3636 6.01187 16.3636 8.18182Z" fill="#AAAAAA"/>
+          <path d="M8.18186 10.9091C9.68809 10.9091 10.9091 9.68809 10.9091 8.18186C10.9091 6.67563 9.68809 5.45459 8.18186 5.45459C6.67563 5.45459 5.45459 6.67563 5.45459 8.18186C5.45459 9.68809 6.67563 10.9091 8.18186 10.9091Z" fill="white"/>
+        </svg>
+      </a>
+      <a class="icon__nav" href="/2018/contact.html" id="icon-contact">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.0061 15.214V18.0809C19.0072 18.3471 18.9527 18.6105 18.8461 18.8544C18.7394 19.0983 18.5831 19.3172 18.3869 19.4971C18.1908 19.677 17.9593 19.814 17.7071 19.8993C17.455 19.9845 17.1879 20.0162 16.9228 19.9923C13.9821 19.6727 11.1573 18.6679 8.67552 17.0584C6.3665 15.5912 4.40886 13.6335 2.94161 11.3245C1.32654 8.83138 0.321443 5.9929 0.00775666 3.03898C-0.0161246 2.77471 0.0152823 2.50836 0.0999775 2.2569C0.184673 2.00543 0.3208 1.77436 0.499694 1.57838C0.678587 1.38241 0.896327 1.22583 1.13905 1.11862C1.38177 1.01141 1.64416 0.955909 1.9095 0.955659H4.77646C5.24025 0.951094 5.68987 1.11533 6.04152 1.41775C6.39317 1.72017 6.62285 2.14014 6.68777 2.59938C6.80877 3.51687 7.03319 4.41773 7.35672 5.28476C7.4853 5.62681 7.51313 5.99855 7.43691 6.35593C7.36069 6.71332 7.18362 7.04136 6.92668 7.30119L5.713 8.51487C7.07342 10.9074 9.05439 12.8884 11.4469 14.2488L12.6606 13.0351C12.9204 12.7782 13.2485 12.6011 13.6058 12.5249C13.9632 12.4487 14.335 12.4765 14.677 12.6051C15.5441 12.9286 16.4449 13.153 17.3624 13.274C17.8266 13.3395 18.2506 13.5733 18.5537 13.931C18.8567 14.2887 19.0177 14.7453 19.0061 15.214Z" fill="#AAAAAA"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<nav class="nav__site" id="nav-site">
+  {% include "partials/menu_logo.njk" %}
+  <div class="nav__pages">
+    <div class="nav__expander">
+      <div class="nav__primary"><!-- menu top row -->
+        <a id="menu_weddings" class="nav-item nav__left" href="/2018/weddings/index.html">WEDDINGS</a>
+        <a id="menu_engagements" class="nav-item nav__left" href="/2018/engagements/index.html">ENGAGEMENTS</a>
+      </div>
+      <div class="nav__secondary"><!-- menu bottom row -->
+        <a id="menu-expander" class="nav-item nav__left">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="5.5" x2="5.5" y2="11" stroke="#AAAAAA"/>
+            <line y1="5.5" x2="11" y2="5.5" stroke="#AAAAAA"/>
+          </svg>
+        </a>
+        <a id="menu_mitzvahs" class="nav-item nav__left" href="/2018/mitzvahs/index.html">MITZVAHS</a>
+        <a id="menu_client_galleries" class="nav-item nav__left" href="/2018/client-galleries.html">MY PROOFS</a>
+      </div>
+    </div>
     <a id="menu_studio" class="nav-item nav__right" href="/2018/studio.html">THE STUDIO</a>
     <a id="menu_contact" class="nav-item nav__right" href="/2018/contact.html">CONTACT US</a>
-  </div>
-  {# <div class="nav__secondary"><!-- menu bottom row -->
-    <a id="menu_mitzvahs" class="nav-item nav__left" href="/2018/mitzvahs/index.html">MITZVAHS</a>
-    <a id="menu_client_galleries" class="nav-item nav__left" href="/2018/client-galleries.html">MY PROOFS</a>
+    <div class="line"></div>
   </div>
   <div class="nav__extras">
     {% include "partials/menu_blog_link.njk" %}
     {% include "partials/social_follow.njk" %}
-  </div> #}
+  </div>
 </nav>

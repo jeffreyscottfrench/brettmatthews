@@ -11,6 +11,13 @@ nav.nav__site {
   align-items: stretch;
   align-content: stretch;
   background-color: $white;
+  @include devBorder(red);
+  & > * {
+    @include devBorder(green);
+    & > * {
+      @include devBorder(pink);
+    }
+  }
 
   body.js__menu--open & {
     overflow-y: auto;
@@ -34,7 +41,7 @@ nav.nav__site {
     height: auto;
     width: 100%;
     flex-flow: row wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     align-content: flex-start;
   }
@@ -47,9 +54,10 @@ nav.nav__site {
 
 nav.nav__mobile {
   position: relative;
-  top: 0;
+  top: calc(100vh - 60px);
+  width: 100%;
   z-index: 8500;
-  background-color: $color-primary;
+  background-color: $white;
   transition-property: top;
   transition-duration: 400ms;
   transition-timing-function: cubic-bezier(1, 0, 0, 1);
@@ -57,58 +65,95 @@ nav.nav__mobile {
 
   body.js__menu--open & {
     position: sticky;
-    top: calc(100vh - 40px);
+    top: calc(100vh - 40px); // bring in cvh from alexsachel.com
   }
 
   @media screen and (min-width: $tablet_and_up) {
     display: none;
   }
+}
+
+nav.nav__mobile {
 
   & div.nav__mobile {
     position: relative;
     flex: 0 1 auto;
     width: 100%;
-    height: 40px;
-    padding: 0 $space;
+    padding: $space;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: center;
     align-content: center;
+    align-items: center;
   }
 
   & a {
+    display: block;
     padding: 0;
   }
 
-  & #home-mobile {
-    width: 75%;
-    flex-shrink: 0;
-    // @include devBorder();
-  }
+  & div.container__icons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    width: auto;
+    padding: 0;
 
-  & #contact-icon,
-  & #menu-button {
-    flex: 0 1 auto;
-    line-height: 0;
-    max-height: 20px;
+    & a,
     & svg {
-      max-height: 20px;
+      display: block;
+    }
+
+    & a.icon__nav {
+      margin-left: $space;
+      margin-right: $space;
+
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+
+      & svg {
+        height: 25px;
+      }
+    }
+
+    & #icon-pin svg {
+      // brings width up to uniform 20px like others
+      margin-left: 2px;
+      margin-right: 2px;
     }
   }
+
+  & a.icon__nav,
   & #menu-button {
-    transform: rotate(0);
-    transition-property: transform;
-    transition-duration: 200ms;
-    transition-timing-function: (1, 0, 0, 1);
-    transition-delay: 0;
+    flex: 0 1 auto;
   }
-  .js__menu--open & #menu-button {
-    transform: rotate(135deg);
+
+  & #menu-button {
+    margin: 0 auto;
+    & svg {
+      display: block;
+      height: 21px;
+      transform: rotate(0);
+      transition-property: transform;
+      transition-duration: 200ms;
+      transition-timing-function: (1, 0, 0, 1);
+      transition-delay: 0;
+    }
   }
 }
 
-nav.nav__site > div {
+.js__menu--open .nav__mobile #menu-button svg {
+  transform: rotate(135deg);
+}
+
+div.nav__pages {
+  position: relative;
   flex: 0 1 auto;
   display: flex;
   flex-flow: row wrap;
@@ -118,47 +163,119 @@ nav.nav__site > div {
 
   @media screen and (min-width: $phone_landscape_and_up) {
     flex: 1 1 auto;
-    width: 50%;
-    &.nav__secondary,
-    &.nav__primary {
-      margin-bottom: $space4x;
-    }
+    width: 50%; // two columns
   }
   @media screen and (min-width: $tablet_and_up) {
+    position: absolute;
+    top: $space3x;
+    flex: 0 1 auto;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-content: flex-end;
-    align-items: center;
+    justify-content: space-between;
+    align-content: flex-start;
+    align-items: flex-start;
     width: 100%;
-    &.nav__secondary,
-    &.nav__primary {
-      margin-bottom: 0;
+  }
+
+  & a#menu-expander {
+    align-self: flex-start;
+  }
+
+  & div.line {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: $space; // match padding on nav-items
+    right: $space; // match padding on nav-items
+    width: auto;
+    height: 1px;
+    background-color: $color-primary;
+    z-index: 2;
+  }
+}
+
+div.nav__expander {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+
+  & div.nav__primary {
+    z-index: 2;
+    margin-left: 31px; // button plus padding
+  }
+
+  & div.nav__secondary {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    bottom: calc(-1 * (100% + 1px)); // full height plus divider line
+  }
+}
+
+div.nav__primary,
+div.nav__secondary {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  background-color: $white;
+}
+
+div.nav__extras {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+
+  & .container-blogLink {
+    flex: 1 1 auto;
+    width: auto;
+    margin-right: $space2x;
+
+    & img {
+      display: block;
+      height: 18px;
+      @media (min-width: $break-small) {
+        height: 22px;
+      }
+    }
+
+  }
+}
+
+nav.nav__site {
+  .js__menu--open & {
+
+    & div.nav__secondary {
+
     }
   }
-  @media screen and (min-width: $desktop_and_up) {
-    padding: 0;
-    align-items: baseline;
+  .js__menu--open & {
+
+    & div.nav__secondary {
+      bottom: 0;
+    }
   }
 }
-div.nav__secondary {
-  // margin-bottom: $space4x;
-}
 
-nav > div > a,
-aside nav > div > a,
-.aside nav > div > a {
-  flex: 1 1 auto;
-}
 
-nav a {
+nav a.nav-item {
   padding: $space;
   margin: 0;
 }
 
-nav.nav__site a {
+nav.nav__site a.nav-item {
   flex: 1 1 auto;
-  padding: 8px 0;
+  padding: $space 0;
   width: 100%;
 
   @media screen and (min-width: 400px) {
@@ -166,21 +283,19 @@ nav.nav__site a {
   }
 
   @media screen and (min-width: $tablet_and_up) {
-    padding: $space 0;
+    flex: 0 1 auto;
+    padding: $space-half $space;
     width: auto;
   }
 }
-nav.nav__site a.nav__left {
-  @media screen and (min-width: $tablet_and_up) {
-    align-self: flex-start;
-  }
-}
-nav.nav__site a.nav__right {
-  @media screen and (min-width: $tablet_and_up) {
-    align-self: flex-end;
-  }
-}
 
+nav.nav__site {
+  @media screen and (min-width: $tablet_and_up) {
+    & a#menu_studio {
+      margin-left: auto;
+    }
+  }
+}
 
 
 
