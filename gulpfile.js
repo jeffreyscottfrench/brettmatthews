@@ -708,6 +708,14 @@ let resizeImageTasks = [];
   gulp.task(resizeImageTask, function(){
     return gulp.src( imagesSRC )
       .pipe( filter('**/*.jpg') )
+      .pipe( newer( {
+        dest: imagesDestination,
+        map:
+          function(relativePath) {
+            let relativePathBasename = relativePath.replace('.jpg', '');
+            return relativePathBasename + '-' + size + 'w' + '.jpg';
+          }
+      }))
       .pipe( parallel(
         imageResize({
           imageMagick: true,
