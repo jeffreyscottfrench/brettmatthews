@@ -1,7 +1,7 @@
 .container-headerLogo {
   position: relative;
   width: auto;
-  margin: 0 auto;
+  margin: $space auto $space2x;
   z-index: 5100;
   display: flex;
   flex-flow: column nowrap;
@@ -10,7 +10,7 @@
   align-items: center;
 
   @media screen and (min-width: $tablet_and_up) {
-
+    margin: 0 auto;
   }
 
 
@@ -32,4 +32,26 @@
     text-align: center;
     color: $gray-md;
   }
+}
+
+footer .text__address {
+  text-align: center;
+  margin-bottom: $space2x;
+  & span {
+    display: inline-block;
+    padding: 0 0 $space-half;
+  }
+
+  @media screen and (min-width: $tablet_and_up) {
+    text-align: left;
+    margin-bottom: 0;
+    & span {
+      display: block;
+      padding: $space;
+    }
+  }
+}
+
+.container-footerLogo {
+  padding: $space4x 0;
 }

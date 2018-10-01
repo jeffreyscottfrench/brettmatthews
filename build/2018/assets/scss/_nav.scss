@@ -1,26 +1,26 @@
 nav.nav__site {
+  display: flex;
   position: absolute;
   top: 0;
-  height: 100vh;
+  bottom: auto;
   left: 0;
   right: 0;
-  overflow: hidden;
-  display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  align-items: stretch;
   align-content: stretch;
-  background-color: $white;
-  @include devBorder(red);
-  & > * {
-    @include devBorder(green);
-    & > * {
-      @include devBorder(pink);
-    }
-  }
+  align-items: stretch;
+  padding: $space2x 0;
+  overflow: hidden;
+  transition-property: top, bottom;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(1, 0, 0, 1);
+  transition-delay: 0;
 
-  body.js__menu--open & {
+  .js__menu--open & {
     overflow-y: auto;
+    top: auto;
+    bottom: calc(var(--nch));
+
     @media screen and (min-width: $tablet_and_up) {
       position: relative;
       height: auto;
@@ -29,21 +29,38 @@ nav.nav__site {
       align-items: flex-start;
       align-content: flex-start;
     }
+    @media screen and (min-width: $phone_landscape_and_up) {
+      // height: calc(var(--ncvh) * 100 - var(--nch));
+      max-height: calc(var(--ncvh) * 100 - var(--nch));
+    }
   }
 
   @media screen and (min-width: $phone_landscape_and_up) {
-    bottom: auto;
-    top: 0;
-    flex-flow: row nowrap;
+    flex-flow: column wrap;
+    & > * {
+      flex: 0 1 auto;
+      width: 50%; // two columns
+    }
+
+    // TODO   Position more evenly
+    // & div.nav__extras {
+    //   margin-top: auto;
+    // }
+
   }
+
   @media screen and (min-width: $tablet_and_up) {
     position: relative;
     height: auto;
     width: 100%;
+    padding: 0;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-start;
     align-content: flex-start;
+    & > * {
+      width: auto;
+    }
   }
 
   .js__shortScreen & {
@@ -53,19 +70,21 @@ nav.nav__site {
 }
 
 nav.nav__mobile {
-  position: relative;
-  top: calc(100vh - 60px);
+  position: absolute;
+  bottom: 0;
+  height: auto;
+  height: var(--nch);
   width: 100%;
   z-index: 8500;
   background-color: $white;
-  transition-property: top;
-  transition-duration: 400ms;
-  transition-timing-function: cubic-bezier(1, 0, 0, 1);
-  transition-delay: 0;
+  border-top: 1px solid $color-primary;
+  border-bottom: 1px solid $color-primary;
+  @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
 
-  body.js__menu--open & {
-    position: sticky;
-    top: calc(100vh - 40px); // bring in cvh from alexsachel.com
+  .js__menu--open & {
+    top: auto;
+    border-top: 1px solid $color-primary;
+    @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
   }
 
   @media screen and (min-width: $tablet_and_up) {
@@ -93,18 +112,6 @@ nav.nav__mobile {
   }
 
   & div.container__icons {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: flex-start;
-    width: auto;
-    padding: 0;
-
-    & a,
-    & svg {
-      display: block;
-    }
 
     & a.icon__nav {
       margin-left: $space;
@@ -155,20 +162,18 @@ nav.nav__mobile {
 div.nav__pages {
   position: relative;
   flex: 0 1 auto;
+  order: 3;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-content: stretch;
+  align-items: stretch;
 
   @media screen and (min-width: $phone_landscape_and_up) {
-    flex: 1 1 auto;
-    width: 50%; // two columns
   }
   @media screen and (min-width: $tablet_and_up) {
     position: absolute;
     top: $space3x;
-    flex: 0 1 auto;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -178,19 +183,26 @@ div.nav__pages {
   }
 
   & a#menu-expander {
-    align-self: flex-start;
+    display: none;
+    @media screen and (min-width: $tablet_and_up) {
+      display: block;
+      align-self: flex-start;
+    }
   }
 
   & div.line {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: $space; // match padding on nav-items
-    right: $space; // match padding on nav-items
-    width: auto;
-    height: 1px;
-    background-color: $color-primary;
-    z-index: 2;
+    display: none;
+    @media screen and (min-width: $tablet_and_up) {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: $space; // match padding on nav-items
+      right: $space; // match padding on nav-items
+      width: auto;
+      height: 1px;
+      background-color: $color-primary;
+      z-index: 2;
+    }
   }
 }
 
@@ -199,51 +211,85 @@ div.nav__expander {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: flex-start;
-  align-items: flex-start;
+  align-content: stretch;
+  align-items: stretch;
+
+  @media screen and (min-width: $tablet_and_up) {
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
 
   & div.nav__primary {
-    z-index: 2;
-    margin-left: 31px; // button plus padding
+    @media screen and (min-width: $tablet_and_up) {
+      z-index: 2;
+      margin-left: 31px; // button plus padding
+    }
   }
 
   & div.nav__secondary {
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    bottom: calc(-1 * (100% + 1px)); // full height plus divider line
+    @media screen and (min-width: $tablet_and_up) {
+      z-index: 1;
+      position: absolute;
+      width: 100%;
+      bottom: 0; // closed
+      bottom: calc(-1 * (100% + 1px)); // open adds full height plus divider line
+    }
   }
 }
 
 div.nav__primary,
 div.nav__secondary {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: flex-start;
-  align-items: flex-start;
-  background-color: $white;
+  align-content: stretch;
+  align-items: stretch;
+
+  @media screen and (min-width: $tablet_and_up) {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    background-color: $white;
+  }
 }
 
 div.nav__extras {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  order: 2;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: center;
-  align-items: center;
+  align-content: stretch;
+  align-items: stretch;
+
+  @media screen and (min-width: $tablet_and_up) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+  }
 
   & .container-blogLink {
     flex: 1 1 auto;
     width: auto;
-    margin-right: $space2x;
+    margin: 0 auto $space2x;
+    padding: $space;
+
+    @media screen and (min-width: $tablet_and_up) {
+      margin-left: 0;
+      margin-right: $space2x;
+      margin-bottom: 0;
+      padding: 0;
+    }
 
     & img {
       display: block;
-      height: 18px;
+      height: 26px;
       @media (min-width: $break-small) {
         height: 22px;
       }
@@ -275,8 +321,9 @@ nav a.nav-item {
 
 nav.nav__site a.nav-item {
   flex: 1 1 auto;
-  padding: $space 0;
   width: 100%;
+  padding: $space;
+  text-align: center;
 
   @media screen and (min-width: 400px) {
     padding: $space 0;
@@ -297,7 +344,74 @@ nav.nav__site {
   }
 }
 
+nav.nav__footer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
 
+  & * > {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  @media screen and (min-width: $tablet_and_up) {
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-content: space-around;
+    align-items: center;
+    height: 260px;
+    width: 100%;
+    margin-top: $space4x;
+
+    & * > {
+      flex: 1 1 auto;
+      width: 50%;
+    }
+
+    div.text__address {
+      height: 66%;
+      order: 2;
+      text-align: center;
+    }
+
+    & a#footer_blog,
+    & .container-social {
+      order: 3;
+      align-self: center;
+    }
+
+  }
+
+  @media screen and (min-width: $tablet_landscape_and_up) {
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-content: space-around;
+    align-items: flex-start;
+    height: 130px;
+    width: 100%;
+    margin-top: $space4x * 4;
+
+    & * > {
+      flex: 0 1 auto;
+      width: 25%;
+    }
+
+    div.text__address {
+      height: auto;
+      order: 0;
+      text-align: left;
+    }
+
+    & a#footer_blog,
+    & .container-social {
+      order: 0;
+      align-self: flex-start;
+    }
+  }
+
+}
 
 
 div.nav__pageNav,

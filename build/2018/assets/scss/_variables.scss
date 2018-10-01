@@ -29,8 +29,9 @@ $break-giant: 1500px;  // Excludes most laptops
 $break-max: 2000px;  // Ultra-large displays
 
 $phone_landscape_and_up: 520px;
+$tablet_and_down: 749px;
 $tablet_and_up: 750px;
-$tablet_and_down: 1023px;
+$tablet_landscape_and_up: 950px;
 $desktop_and_up: 1024px;
 
 $space: 10px;
@@ -38,3 +39,12 @@ $space-half: $space / 2;
 $space2x: $space * 2;
 $space3x: $space * 3;
 $space4x: $space * 4;
+
+
+:root {
+  --cvh: 1vh;
+  --ncvh: 1vh;
+  --ncp: 100vh;
+  --nch: auto;
+  --mch: auto;
+}

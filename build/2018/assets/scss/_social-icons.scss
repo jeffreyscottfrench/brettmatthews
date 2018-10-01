@@ -9,6 +9,12 @@
 
 .container-social {
 
+  @media screen and (max-width: $tablet_and_down) {
+    nav.nav__site & {
+      display: none;
+    }
+  }
+
   & a.social-icon {
     margin-left: $space-half / 2;
     margin-right: $space-half / 2;
@@ -29,8 +35,19 @@
 
     .nav__mobile & {
       padding: 0;
-      // svg height is handled as icon__nav
+      // svg height is handled as icon__nav here
     }
+
+    .nav__footer & {
+      padding: $space 0;
+      margin-left: $space-half;
+      margin-right: $space-half;
+
+      & svg {
+        height: 18px;
+      }
+    }
+
   }
 
 }

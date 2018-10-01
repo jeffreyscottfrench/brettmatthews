@@ -16,8 +16,10 @@ body {
   color: $color-primary;
 }
 .super-container {
-  padding: 5px 0 0;
-  @media (min-width: $break-mid) {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  @media (min-width: $tablet_and_up) {
     padding: $space 0 0;
     margin: 0 $space;
   }
@@ -36,51 +38,66 @@ a {
   }
 }
 
-footer, .main {
+.main {
   position: relative;
   @include flexbox;
 }
 
-footer {
-  @include flex-flow(row wrap);
-}
 header {
-  position: relative;
+  position: sticky;
+  top: calc(100vh - 50px); // estimated
+  top: calc((var(--ncvh) * 100 ) - var(--nch));
+  height: 50px; // estimated
+  height: var(--nch);
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   width: 100%;
   padding: 0;
-  margin: $space 0 0;
+  margin: 0;
   z-index: 5000;
+  overflow: hidden;
+  background-color: $white;
+  border-top: 1px solid $color-primary;
+  @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
+  transition-property: top, height;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(1, 0, 0, 1);
+  transition-delay: 0;
+
+ .js__menu--open & {
+    top: 0;
+    top: calc((var(--ncvh) * 100) - var(--nch) - var(--mch));
+    height: calc(100vh);
+    height: calc(var(--nch) + var(--mch));
+    @include box-shadow(0px, 10px, 10px, -10px, rgba(153,153,153,.33), true);
+  }
+
+  @media screen and (min-width: $tablet_and_up) {
+    position: relative;
+    top: 0;
+    height: auto;
+    margin: $space 0 0;
+    border-top: 0;
+    box-shadow: none;
+  }
 }
 
 footer {
-  @include flex-just(center);
-  @include align-items(flex-start);
-  margin: 0 0 $space2x;
-  padding: 0 $space-half;
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  margin: 0;
+  padding: $space2x $space-half $space4x * 2;
   border-top: $border-primary;
   @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
-  @media (min-width: $break-small) {
-    padding: 0;
-  }
+
   @media (min-width: $break-large) {
     @include align-items(center);
     padding-top: 10px;
-  }
-  & > div {
-    @include flex(0,0,auto);
-    width: 100%;
-    margin: 20px auto 0;
-    text-align: center;
-    &:first-child {
-      margin-top: 0;
-    }
-    @media (min-width: $break-small) {
-      @include flex(0,1,auto);
-      width: auto;
-    }
   }
 }
 
@@ -92,7 +109,8 @@ div.main {
     margin: $space 0;
   }
   &.homepage {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 50px);
+    height: calc((var(--cvh) * 100) - var(--nch));
     // overflow: hidden;
   }
 }
@@ -158,28 +176,68 @@ span.text {
   white-space: nowrap;
 }
 
-.footerBusinessInfo {
+
+div.container__icons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  width: auto;
+  padding: 0;
+
+  & a,
+  & svg {
+    display: block;
+  }
+}
+
+div.footerBusinessInfo {
+  display: none;
+  flex: 0 1 auto;
+  width: 100%;
+  margin: 20px auto 0;
+  text-align: center;
   padding: 10px;
   line-height: $line-height * 1.33;
+
+  @media (min-width: $break-small) {
+    @include flex(0,1,auto);
+    width: auto;
+  }
+  @media screen and (min-width: $tablet_and_up) {
+    display: block;
+  }
+
+  @media (min-width: $break-large) {
+    margin: 0 auto;
+    line-height: $line-height;
+    padding: 0;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
   & span.text {
     display: block;
     width: 100%;
   }
+
   & span.dividerLine {
     display: none;
   }
+
   @media (min-width: $break-small) {
     & span.text,
     & span.dividerLine {
       display: inline;
     }
   }
-  @media (min-width: $break-large) {
-    margin: 0 auto;
-    line-height: $line-height;
-    padding: 0;
-  }
+
 }
+
+
 .copyright,
 .container-footerLogo {
   width: 100%;
@@ -187,17 +245,21 @@ span.text {
 }
 
 .container-footerLogo {
-  @include flexbox;
-  @include flex-just(center);
-  @include align-items(center);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
+
 .footerLogo {
+  flex: 0 1 auto;
   margin: 0 10px;
   & img {
     display: block;
-    width: 5%;
-    min-width: 20px;
-    max-width: 35px;
+    width: 10%;
+    min-width: 30px;
+    max-width: 60px;
     margin: 0 auto;
     padding: 2px 2px 0 0;
   }
