@@ -12,6 +12,12 @@ const customViewHeight = function() {
   let menuHeight = document.getElementById('nav-site').offsetHeight + 'px';
   document.documentElement.style.setProperty('--mch', menuHeight);
 
+  let headerHeight = document.getElementById('header-site').offsetHeight + 'px';
+  document.documentElement.style.setProperty('--hch', headerHeight);
+
+  let footerBusInfoHeight = document.getElementById('footer-busInfo').offsetHeight + 'px';
+  document.documentElement.style.setProperty('--fbch', footerBusInfoHeight);
+
   const customViewHeightNav = function() {
     if (activeElement && inputs.indexOf(activeElement.tagName.toLowerCase()) !== -1) {
       // focus is on input / keyboard is showing then use regular vh

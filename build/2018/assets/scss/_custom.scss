@@ -108,12 +108,18 @@ div.main {
   @media (min-width: $break-mid) {
     margin: $space 0;
   }
+
   &.homepage {
     height: calc(100vh - 50px);
     height: calc((var(--cvh) * 100) - var(--nch));
-    // overflow: hidden;
+
+    @media screen and (min-width: $tablet_landscape_and_up) {
+      height: calc(100vh - 170px);
+      height: calc((var(--cvh) * 100) - var(--hch) - var(--fbch) - 60px); // 60px for margins
+    }
   }
 }
+
 div.main.contact {
   @include flex-flow(row wrap);
   @include flex-just(center);
