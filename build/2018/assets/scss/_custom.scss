@@ -134,6 +134,13 @@ div.main {
       padding: $space2x 0;
     }
   }
+  &.client_galleries {
+    @media screen and (min-width: $tablet_landscape_and_up) {
+      min-height: calc(100vh - 170px);
+      min-height: calc((var(--cvh) * 100) - var(--hch) - var(--fbch) - 60px); // 60px for margins
+      padding: 0;
+    }
+  }
 }
 
 section {
@@ -157,6 +164,14 @@ section {
 
   &.content {
     position: relative;
+  }
+
+  .client_galleries & {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
   }
 }
 
