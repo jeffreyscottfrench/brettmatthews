@@ -80,11 +80,11 @@ form {
     &:hover {
       cursor: default;
       cursor: not-allowed;
-      color: $gray-med;
+      color: $gray-md;
       border: $border-inputs;
     }
     &:focus {
-      color: $gray-med;
+      color: $gray-md;
       border: $border-inputs;
       outline: none;
     }
