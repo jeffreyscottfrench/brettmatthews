@@ -11,9 +11,11 @@ $font-icon: "Entypo-subset", sans-serif; // Icons
 $color-primary: #aaaaaa;
 $color-secondary: #666666;
 $color-terciary: #000000;
+$color-alert: #CC0000;
 $black: #121212;
 $gray-dk: #444444;
 $gray-md: #999999;
+$gray-med: #999999;
 $gray-lt: #dddddd;
 $white: #ffffff;
 
@@ -28,6 +30,7 @@ $break-xlarge: 1146px; // 1090px content + 5% for margins
 $break-giant: 1500px;  // Excludes most laptops
 $break-max: 2000px;  // Ultra-large displays
 
+$phone_landscape_and_down: 519px;
 $phone_landscape_and_up: 520px;
 $tablet_and_down: 749px;
 $tablet_and_up: 750px;

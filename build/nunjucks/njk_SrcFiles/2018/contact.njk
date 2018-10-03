@@ -1,0 +1,55 @@
+{% extends "layout.njk" %}
+
+{% set content_special_class %}contact{% endset %}
+
+{% block content %}
+  <section class="content" id="content-contact">
+
+    <div id="main-contact-form">
+      <div class="form-header block-styled"><div>WE WOULD LOVE TO HEAR FROM YOU!</div>Send us your information using the form below and we'll get back to you right away!
+      </div>
+      <form name="form1" id="form1" method="post" action="/secure_scripts/contact-phpmailer.php">
+        <div name="formWrapper" class="form-wrapper">
+          <input name="name" type="text" class="required" placeholder="* Your Name" autocomplete="name"/>
+          <input name="email" type="text" class="required" placeholder="* Your Email Address" autocomplete="email"/>
+          <input name="main_phone" type="text" class="required" placeholder="* Phone Number" autocomplete="tel"/>
+          <input name="event_date" type="text" placeholder="Event Date" />
+          <input name="event_location" type="text" placeholder="Event Location" />
+          <div class="styled-select">
+            <select name="event_type">
+              <option value="- did not specify -">Event Type (Please Select)</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Anniversary Party">Anniversary Party</option>
+              <option value="Bat Mitzvah">Bat Mitzvah</option>
+              <option value="Bar Mitzvah">Bar Mitzvah</option>
+              <option value="Birthday Party">Birthday Party</option>
+              <option value="Sweet Sixteen">Sweet Sixteen</option>
+              <option value="Other - See Message">Other - Use Comments</option>
+            </select>
+          </div>
+          <div class="styled-checkbox" id="container-checkbox">
+            <div class="form-text">Preferred contact method:</div>
+            <div class="checkbox" id="box1">
+                <input type="checkbox" id="contact-via-email" class="checkbox-box" name="contact_via_email" value="Email" />
+                <label for="contact-via-email" class="checkbox-label">email</label>
+            </div>
+            <span>and/or</span>
+            <div class="checkbox" id="box2">
+                <input type="checkbox" id="contact-via-phone" class="checkbox-box" name="contact_via_phone" value="Phone"/>
+                <label for="contact-via-phone" class="checkbox-label">phone</label>
+            </div>
+          </div>
+          <input style="display:none;" name="info" type="text" placeholder="hp-safety" value="">
+          <textarea name="comments" id="comment-box" class="comment-box" rows="2" placeholder="How did you hear about us?"></textarea>
+          <button class="button__form" id="reset" name="reset" type="reset" >Reset</button>
+          <div id="form-key" class="required-key"><div>* Indicates required</div></div>
+          <button class="button__form" id="submit" name="submit" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </section>
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

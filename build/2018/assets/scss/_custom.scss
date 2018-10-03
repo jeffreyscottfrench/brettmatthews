@@ -91,7 +91,7 @@ footer {
   align-content: flex-start;
   align-items: center;
   margin: 0;
-  padding: $space2x $space-half $space4x * 2;
+  padding: $space4x $space-half $space4x * 2;
   border-top: $border-primary;
   @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
 
@@ -102,7 +102,7 @@ footer {
 }
 
 
-// Define layout for main content area
+// Define layout for main content areas
 div.main {
   margin: $space2x 0;
   @media (min-width: $break-mid) {
@@ -121,33 +121,38 @@ div.main {
       height: calc((var(--cvh) * 100) - var(--hch) - var(--fbch) - 60px); // 60px for margins
     }
   }
-}
 
-div.main.contact {
-  @include flex-flow(row wrap);
-  @include flex-just(center);
-  padding: 0 10px;
-  @media (min-width: $break-mid) {
-    @include flex-flow(row nowrap);
-    padding: 0;
+  &.contact {
+    margin-top: calc(var(--nch) * -1);
+    margin-bottom: 0;
+    padding: $space $space $space4x;
+    @media screen and (min-width: $tablet_landscape_and_up) {
+      min-height: calc(100vh - 170px);
+      min-height: calc((var(--cvh) * 100) - var(--hch) - var(--fbch) - 60px); // 60px for margins
+      padding: $space2x 0;
+    }
   }
 }
 
 section {
   width: 100%;
   @include spaceVert();
+
   .main.contact & {
     @include flex(0, 1, auto);
     width: 100%;
+
     @media (min-width: $break-mid) {
-      width: 40%;
-      margin-left: 2.5%;
-      margin-right: 2.5%;
+      width: 50%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
       &:nth-child(-n+2) {
         margin-top: 0;
       }
     }
   }
+
   &.content {
     position: relative;
   }

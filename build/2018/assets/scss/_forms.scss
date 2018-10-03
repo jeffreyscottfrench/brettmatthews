@@ -1,73 +1,139 @@
-// utilizes mini.css form styles and adds these
+
 form {
-  @include flexbox;
-  @include flex-flow(row wrap);
-  @include flex-just(space-between);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: flex-start;
+  align-items: flex-start;
 }
+
 form {
-  input,
-  textarea,
-  select,
-  .styled-checkbox,
-  .styled-select {
-  	width: 100%;
-  	line-height: 1.6rem;
+  & input,
+  & textarea,
+  & select,
+  & button,
+  & .styled-checkbox,
+  & .styled-select {
+    margin: $space 0;
+    border: $border-inputs;
+    color: $color-primary;
+    font-size: $font-size;
+    line-height: 1.6rem;
+
+    &::placeholder {
+      color: $color-primary;
+    }
   }
-  *[role="button"]:hover,
-  input[type="submit"]:hover,
-  input[type="reset"]:hover,
-  input[type="button"]:hover,
-  button:hover {
+
+  & input,
+  & textarea,
+  & select,
+  & .styled-checkbox,
+  & .styled-select {
+    width: 100%;
+    padding-left: $space-half;
+  }
+
+  & *[role="button"]:hover,
+  & input[type="submit"]:hover,
+  & input[type="reset"]:hover,
+  & input[type="button"]:hover,
+  & button:hover {
     background-color: $color-secondary;
     color: #FFFFFF;
   }
 }
 
 form input:focus,
+form select:focus,
 form textarea:focus,
 form input.required:focus,
 form input[type=checkbox]:focus + label.checkbox-label {
 	outline: none;
 }
+
 form input:focus,
 form textarea:focus,
-form .styled-select:focus {
+form .styled-select:focus-within {
   border: $border-secondary;
 }
+
 form input[type=checkbox]:focus + label.checkbox-label {
-	border-bottom: $border-secondary;
+	color: $color-secondary;
 }
 
- form input.required:focus {
-	border: solid 1px #F00;
+form div.required-key {
+  border-bottom: solid 1px $color-alert;
+}
+form input.required:focus {
+  border: solid 1px $color-alert;
+}
+
+form {
+  & button {
+    padding: 0 $space2x;
+    background-color: $white;
+  }
+
+  & .button--disabled {
+    opacity: .3;
+    &:hover {
+      cursor: default;
+      cursor: not-allowed;
+      color: $gray-med;
+      border: $border-inputs;
+    }
+    &:focus {
+      color: $gray-med;
+      border: $border-inputs;
+      outline: none;
+    }
+  }
 }
 
 
 .styled-select {
   overflow: hidden;
   background: url('/2018/images/arrow-down-contact.png') no-repeat right;
+  background-image: url('data:image/svg+xml;utf8,<svg width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="8.78791" y1="9.45586" x2="17.5642" y2="1.27188" stroke="%23CCCCCC"/><line x1="9.43537" y1="9.54976" x2="0.659123" y2="1.36578" stroke="%23CCCCCC"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+
+  &:focus-within {
+    background-image: url('data:image/svg+xml;utf8,<svg width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="8.78791" y1="9.45586" x2="17.5642" y2="1.27188" stroke="%23666666"/><line x1="9.43537" y1="9.54976" x2="0.659123" y2="1.36578" stroke="%23666666"/></svg>');
+  }
+
   & select {
     background: transparent;
     max-width: 100%;
     margin: 0;
+    padding: 0;
     border: 0;
     border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 }
 
 .styled-checkbox {
-  @include flexbox;
-  @include flex-flow(row wrap);
-  @include flex-just(space-around);
-  @include align-items(center);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: center;
+  padding: $space;
+
   & .form-text {
     width: 100%;
+    padding: 0 0 $space;
     text-align: center;
   }
   & div.checkbox {
    	margin: -4px 5px 0 0;
   }
-  & input[type="checkbox"].checkbox-box { // hides normal checkbox
+
+  // hides normal checkbox
+  & input[type="checkbox"].checkbox-box {
   	position: absolute;
   	overflow: hidden;
   	clip: rect(0, 0, 0, 0);
@@ -77,66 +143,97 @@ form input[type=checkbox]:focus + label.checkbox-label {
   	padding: 0;
   	border: 0;
   }
+
+  // sets label as only visible item
   & input[type="checkbox"].checkbox-box + label.checkbox-label {
-  	padding: 0 0 0 20px; // sets label as only visible item
-  	height: 15px;
   	display: inline-block;
+    padding-left: 20px;
+  	height: 15px;
   	line-height: 15px;
-  	background-repeat: no-repeat;
+    background-repeat: no-repeat;
   	background-position: 0 0;
   	vertical-align: middle;
   	cursor: pointer;
   }
+
+  // moves on checked status
   & input[type="checkbox"].checkbox-box:checked + label.checkbox-label {
   	background-position: 0 -15px;
   }
+
+  // image src for what the new checkbox looks like
   & .checkbox-label {
-  	background-image:url('/2018/images/custom-checkbox-lite-x-gray.png');
+  	background-image: url('/2018/images/custom-checkbox-lite-x-gray.png');
   }
+
   & label {
-  	display: block;
+    display: block;
   }
 }
 
 .contact {
-  & form > div {
-    margin: 1.25rem auto 0;
-    border: $border-inputs;
+  color: $color-primary;
+
+  & .form-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin: $space2x auto 0;
   }
 
-  & input[type="submit"] {
-    @include align-self(baseline);
-    width: 30%;
+  & .button__form {
+    align-self: baseline;
+    flex: 0 1 auto;
+    max-width: 30%;
+    @media screen and (max-width: $phone_landscape_and_down) {
+      order: 3;
+      width: 40%;
+      max-width: none;
+      margin: $space2x 0;
+    }
+  }
+  & #reset {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  & #submit {
+    margin-left: auto;
     margin-right: 0;
-    padding: 0;
   }
 
   & .form-header {
     width: 100%;
-    padding: 10px;
+    padding: $space2x $space;
     text-align: center;
     background-color: #eeeeee;
     border: $border-inputs;
+
     & div {
       width: 100%;
-      font-size: 1.2em;
-      margin-bottom: 10px;
+      font-size: $font-size * 1.25;
+      margin-bottom: $space;
     }
   }
 
   & .comment-box {
-     height: 200px;
+     min-height: 200px;
   }
 
   & .required-key {
-    @include align-self(baseline);
-    width: auto;
-    margin-right: auto;
-    margin-left: 0;
-    padding: 0 0.5rem;
+    align-self: baseline;
+    flex: 0 1 auto;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 $space;
     line-height: 1.6rem;
+    text-align: center;
     border: 0;
-   	border-bottom: 1px solid #F00;
+    @media screen and (min-width: $tablet_landscape_and_up) {
+      border-bottom: 1px solid $color-alert;
+      width: auto;
+    }
   }
 
   & .form-submissionError,
@@ -144,4 +241,14 @@ form input[type=checkbox]:focus + label.checkbox-label {
     line-height: 1.6rem;
     text-align: center;
   }
+}
+
+span.form__input--error {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  padding: 5px 15px;
+  color: $color-alert;
+  border: 1px solid $color-alert;
+  background: rgba(255, 0, 0, 0.1);
 }
