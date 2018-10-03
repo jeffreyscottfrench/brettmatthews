@@ -3,7 +3,7 @@
   {%- for img in gallery_images %}
         <div class="{{ div_class }}">
           <a href="{{ img.image_pageHref }}" title="{{ img.exifData_caption }}">
-            <picture>{%set image_path %}{{img.image_path}}{% endset %}
+            <picture>{%set image_path %}{{img.image_thmbPath}}{% endset %}
               <img alt="{{ img.image_altTag }}"
               {% include "partials/ri-thmb.njk" %}>
             </picture>

@@ -9,7 +9,7 @@
 
       <div class="container-image image-fit">
 
-          <picture>
+          <picture>{%set image_path %}{{image_path}}{% endset %}
             <img alt="{{ image_altTag }}"
                   {% include "partials/ri-full-width.njk" %}>
           </picture>

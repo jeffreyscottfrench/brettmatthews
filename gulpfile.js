@@ -286,6 +286,8 @@ async function forEachGallery() {
 
         // current image src ('/2018/images' + path )
         img.image_path = '/2018/images/' + img.dir + '/' + img.basename;
+        // corresponding thumbnail image
+        img.image_thmbPath = '/2018/images/' + img.dir + '/' + img.basename + '-thmb';
 
         let imageRefParts = img.fullRef.split(/\//);
         img.image_fileName = imageRefParts[imageRefParts.length - 1];
@@ -361,6 +363,7 @@ async function forEachGallery() {
             path: './build/nunjucks/templates',
             data: {
               image_path: img.image_path,
+              image_thmbPath: img.image_thmbPath,
               image_altTag: img.image_altTag,
               image_pageHref: img.image_pageHref,
               image_pswpGuid: img.image_pswpGuid,
@@ -679,14 +682,14 @@ gulp.task( 'customJS', function() {
  */
 gulp.task( 'imageList', function() {
   gulp.src( imagesSRC )
-    .pipe( filter( '**/*.jpg'))
+    .pipe( filter( ['**/*.jpg', '!**/*thmb*.jpg']))
     .pipe( fileList('image-list.json', {absolute: true, removeExtensions: true}))
     .pipe( filenames('images'))
   .pipe(gulp.dest( imagesDestination ))
 });
 
 gulp.task( 'pswpSlideList', function() {
-  gulp.src( './build/2018/images/**/*w.jpg' )
+  gulp.src( ['./build/2018/images/**/*w.jpg', '!**/*thmb*.jpg'] )
     .pipe( fileList('pswp-slide-list.json', {absolute: true, removeExtensions: false}))
   .pipe(gulp.dest( imagesDestination ))
 });
@@ -698,11 +701,101 @@ gulp.task( 'pswpSlideList', function() {
  *    2. Optimize the resized image
  *    3. Rename with proper basename suffix for px width
  *
- *   todo: make one for dealing with thumbnails
 */
+// TODO    bring in HiDPI versions and adjust sizes on all
+// TODO    match sizes to ri partials
 
+let resizeImageThmbTasks = [];
+[420,640,960,1140].forEach(function(size){
+  var resizeImageThmbTask = 'resize_' + size;
+  gulp.task(resizeImageThmbTask, function(){
+    return gulp.src( imagesSRC )
+      .pipe( filter('**/*thmb.jpg') )
+      .pipe( newer( {
+        dest: imagesDestination,
+        map:
+          function(relativePath) {
+            let relativePathBasename = relativePath.replace('.jpg', '');
+            return relativePathBasename + '-' + size + 'w' + '.jpg';
+          }
+      }))
+      .pipe( parallel(
+        imageResize({
+          imageMagick: true,
+          width: size,
+          crop: false,
+          upscale: false
+        }),
+        os.cpus().length
+      ))
+      .pipe( rename( function(path) {
+          path.basename += '-' + size +'w';
+      }))
+      .pipe( imagemin([
+        imageminJpegOptim({
+          max: 80,
+          stripAll: false,
+          stripCom: true,
+          stripExif: true,
+          stripIptc: true,
+          stripXmp: true,
+          stripIcc: false
+        })
+      ]))
+    .pipe(gulp.dest( imagesDestination ))
+  });
+  resizeImageThmbTasks.push(resizeImageThmbTask);
+});
+gulp.task('resizeImageThmbs', resizeImageThmbTasks);
+
+/**
+ * resize for hi density screens
+ */
+let resize_hidpi_ImageTasks = [];
+[800,1200,1600,2000,2400,2800].forEach(function(size){
+  var resizeImageTask_hidpi = 'resize_HiDpi_' + size;
+  gulp.task(resizeImageTask_hidpi, function(){
+    return gulp.src( imagesSRC )
+      .pipe( filter('**/*.jpg') )
+      .pipe( newer( {
+        dest: imagesDestination,
+        map:
+          function(relativePath) {
+            let relativePathBasename = relativePath.replace('.jpg', '');
+            return relativePathBasename + '-' + size + 'w-2x' + '.jpg';
+          }
+      }))
+      .pipe( parallel(
+        imageResize({
+          imageMagick: true,
+          width: size,
+          crop: false,
+          upscale: false
+        }),
+        os.cpus().length
+      ))
+      .pipe( rename( function(path) {
+          path.basename += '-' + size + 'w-2x';
+      }))
+      .pipe( imagemin([
+        imageminJpegOptim({
+          max: 50,
+          stripAll: false,
+          stripCom: true,
+          stripExif: true,
+          stripIptc: true,
+          stripXmp: true,
+          stripIcc: false
+        })
+      ]))
+    .pipe(gulp.dest( imagesDestination ))
+  });
+  resize_hidpi_ImageTasks.push(resizeImageTask_hidpi);
+});
+gulp.task('resizeHiDPI', resize_hidpi_ImageTasks);
+
+// full size images
 let resizeImageTasks = [];
-
 [640,960,1140,1340,1500,1750,2000,2250,2500].forEach(function(size){
   var resizeImageTask = 'resize_' + size;
   gulp.task(resizeImageTask, function(){
@@ -746,7 +839,7 @@ let resizeImageTasks = [];
 gulp.task('resizeImages', resizeImageTasks);
 
 gulp.task('processImages', function(){
-  runSequence('imageList', 'resizeImages', 'pswpSlideList');
+  runSequence('imageList', 'resizeImages', 'resizeImageThmbs', 'pswpSlideList');
 })
 
 /**
