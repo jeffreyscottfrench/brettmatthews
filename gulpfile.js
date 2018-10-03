@@ -756,7 +756,7 @@ let resize_hidpi_ImageTasks = [];
   var resizeImageTask_hidpi = 'resize_HiDpi_' + size;
   gulp.task(resizeImageTask_hidpi, function(){
     return gulp.src( imagesSRC )
-      .pipe( filter('**/*.jpg') )
+      .pipe( filter(['**/*.jpg', '!**/*thmb.jpg']) )
       .pipe( newer( {
         dest: imagesDestination,
         map:
@@ -800,7 +800,7 @@ let resizeImageTasks = [];
   var resizeImageTask = 'resize_' + size;
   gulp.task(resizeImageTask, function(){
     return gulp.src( imagesSRC )
-      .pipe( filter('**/*.jpg') )
+      .pipe( filter(['**/*.jpg', '!**/*thmb.jpg']) )
       .pipe( newer( {
         dest: imagesDestination,
         map:
