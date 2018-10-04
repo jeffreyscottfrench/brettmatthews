@@ -185,8 +185,9 @@ div.nav__pages {
   & a#menu-expander {
     display: none;
     @media screen and (min-width: $tablet_and_up) {
-      display: block;
-      align-self: flex-start;
+      // leave hidden until more menu items
+      // display: block;
+      // align-self: flex-start;
     }
   }
 
@@ -223,7 +224,7 @@ div.nav__expander {
   & div.nav__primary {
     @media screen and (min-width: $tablet_and_up) {
       z-index: 2;
-      margin-left: 31px; // button plus padding
+      // margin-left: 31px; // button plus padding
     }
   }
 
@@ -232,7 +233,7 @@ div.nav__expander {
       z-index: 1;
       position: absolute;
       width: 100%;
-      bottom: 0; // closed
+      // bottom: 0; // closed
       bottom: calc(-1 * (100% + 1px)); // open adds full height plus divider line
     }
   }
@@ -340,6 +341,10 @@ nav.nav__site {
   @media screen and (min-width: $tablet_and_up) {
     & a#menu_studio {
       margin-left: auto;
+    }
+
+    & a#menu_mitzvahs {
+      margin-right: 7px;
     }
   }
 }

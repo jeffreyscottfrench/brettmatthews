@@ -792,7 +792,7 @@ let resize_hidpi_ImageTasks = [];
   });
   resize_hidpi_ImageTasks.push(resizeImageTask_hidpi);
 });
-gulp.task('resizeHiDPI', resize_hidpi_ImageTasks);
+gulp.task('resizeImageHiDPI', resize_hidpi_ImageTasks);
 
 // full size images
 let resizeImageTasks = [];
@@ -839,7 +839,7 @@ let resizeImageTasks = [];
 gulp.task('resizeImages', resizeImageTasks);
 
 gulp.task('processImages', function(){
-  runSequence('imageList', 'resizeImages', 'resizeImageThmbs', 'pswpSlideList');
+  runSequence('imageList', 'resizeImages', 'resizeImageHiDPI', 'resizeImageThmbs', 'pswpSlideList');
 })
 
 /**

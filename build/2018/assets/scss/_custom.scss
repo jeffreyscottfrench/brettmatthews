@@ -21,7 +21,7 @@ body {
   margin: 0;
   @media (min-width: $tablet_and_up) {
     padding: $space 0 0;
-    margin: 0 $space;
+    margin: 0;
     background-color: none;
   }
 }
@@ -91,8 +91,8 @@ footer {
   justify-content: center;
   align-content: flex-start;
   align-items: center;
-  margin: 0;
-  padding: $space4x $space-half $space4x * 2;
+  margin: 0 $space;
+  padding: $space4x 0 $space4x * 2;
   border-top: $border-primary;
   @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
 
