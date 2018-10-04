@@ -21,17 +21,18 @@ nav.nav__site {
     top: auto;
     bottom: calc(var(--nch));
 
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $phone_landscape_and_up) {
+      // height: calc(var(--ncvh) * 100 - var(--nch));
+      max-height: calc(var(--ncvh) * 100 - var(--nch));
+    }
+
+    @media screen and (min-width: $tablet_landscape_and_up) {
       position: relative;
       height: auto;
       flex-flow: row wrap;
       justify-content: flex-start;
       align-items: flex-start;
       align-content: flex-start;
-    }
-    @media screen and (min-width: $phone_landscape_and_up) {
-      // height: calc(var(--ncvh) * 100 - var(--nch));
-      max-height: calc(var(--ncvh) * 100 - var(--nch));
     }
   }
 
@@ -49,7 +50,7 @@ nav.nav__site {
 
   }
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     position: relative;
     height: auto;
     width: 100%;
@@ -87,7 +88,7 @@ nav.nav__mobile {
     @include box-shadow(0px, -10px, 10px, -10px, rgba(153,153,153,.33), false);
   }
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     display: none;
   }
 }
@@ -171,7 +172,7 @@ div.nav__pages {
 
   @media screen and (min-width: $phone_landscape_and_up) {
   }
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     position: absolute;
     top: $space3x;
     display: flex;
@@ -184,7 +185,7 @@ div.nav__pages {
 
   & a#menu-expander {
     display: none;
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $tablet_landscape_and_up) {
       // leave hidden until more menu items
       // display: block;
       // align-self: flex-start;
@@ -193,7 +194,7 @@ div.nav__pages {
 
   & div.line {
     display: none;
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $tablet_landscape_and_up) {
       display: block;
       position: absolute;
       bottom: 0;
@@ -215,21 +216,22 @@ div.nav__expander {
   align-content: stretch;
   align-items: stretch;
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     justify-content: flex-start;
     align-content: flex-start;
     align-items: flex-start;
   }
 
   & div.nav__primary {
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $tablet_landscape_and_up) {
       z-index: 2;
+      // button is hidden for now
       // margin-left: 31px; // button plus padding
     }
   }
 
   & div.nav__secondary {
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $tablet_landscape_and_up) {
       z-index: 1;
       position: absolute;
       width: 100%;
@@ -247,7 +249,7 @@ div.nav__secondary {
   align-content: stretch;
   align-items: stretch;
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-content: flex-start;
@@ -265,7 +267,7 @@ div.nav__extras {
   align-content: stretch;
   align-items: stretch;
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -281,7 +283,7 @@ div.nav__extras {
     margin: 0 auto $space2x;
     padding: $space;
 
-    @media screen and (min-width: $tablet_and_up) {
+    @media screen and (min-width: $tablet_landscape_and_up) {
       margin-left: 0;
       margin-right: $space2x;
       margin-bottom: 0;
@@ -330,7 +332,7 @@ nav.nav__site a.nav-item {
     padding: $space 0;
   }
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     flex: 0 1 auto;
     padding: $space-half $space;
     width: auto;
@@ -338,7 +340,7 @@ nav.nav__site a.nav-item {
 }
 
 nav.nav__site {
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     & a#menu_studio {
       margin-left: auto;
     }
@@ -361,7 +363,7 @@ nav.nav__footer {
     width: 100%;
   }
 
-  @media screen and (min-width: $tablet_and_up) {
+  @media screen and (min-width: $tablet_landscape_and_up) {
     flex-flow: column wrap;
     justify-content: flex-start;
     align-content: space-around;

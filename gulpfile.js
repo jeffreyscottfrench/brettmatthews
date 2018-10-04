@@ -706,8 +706,8 @@ gulp.task( 'pswpSlideList', function() {
 // TODO    match sizes to ri partials
 
 let resizeImageThmbTasks = [];
-[420,640,960,1140].forEach(function(size){
-  var resizeImageThmbTask = 'resize_' + size;
+[400,600].forEach(function(size){
+  var resizeImageThmbTask = 'resizeThmb_' + size;
   gulp.task(resizeImageThmbTask, function(){
     return gulp.src( imagesSRC )
       .pipe( filter('**/*thmb.jpg') )
@@ -718,7 +718,7 @@ let resizeImageThmbTasks = [];
             let relativePathBasename = relativePath.replace('.jpg', '');
             return relativePathBasename + '-' + size + 'w' + '.jpg';
           }
-      }))
+        }))
       .pipe( parallel(
         imageResize({
           imageMagick: true,
@@ -731,22 +731,71 @@ let resizeImageThmbTasks = [];
       .pipe( rename( function(path) {
           path.basename += '-' + size +'w';
       }))
-      .pipe( imagemin([
-        imageminJpegOptim({
-          max: 80,
-          stripAll: false,
-          stripCom: true,
-          stripExif: true,
-          stripIptc: true,
-          stripXmp: true,
-          stripIcc: false
-        })
-      ]))
+      .pipe( parallel(
+        imagemin([
+          imageminJpegOptim({
+            max: 80,
+            stripAll: false,
+            stripCom: true,
+            stripExif: true,
+            stripIptc: true,
+            stripXmp: true,
+            stripIcc: false
+          })
+        ]),
+        os.cpus().length
+      ))
     .pipe(gulp.dest( imagesDestination ))
   });
   resizeImageThmbTasks.push(resizeImageThmbTask);
 });
 gulp.task('resizeImageThmbs', resizeImageThmbTasks);
+
+let resizeImageThmbHiDPITasks = [];
+[800,1200,1600].forEach(function(size){
+  var resizeImageThmbHiDPITask = 'resizeThmb_' + size;
+  gulp.task(resizeImageThmbHiDPITask, function(){
+    return gulp.src( imagesSRC )
+      .pipe( filter('**/*thmb.jpg') )
+      .pipe( newer( {
+        dest: imagesDestination,
+        map:
+          function(relativePath) {
+            let relativePathBasename = relativePath.replace('.jpg', '');
+            return relativePathBasename + '-' + size + 'w-2x' + '.jpg';
+          }
+        }))
+      .pipe( parallel(
+        imageResize({
+          imageMagick: true,
+          width: size,
+          crop: false,
+          upscale: false
+        }),
+        os.cpus().length
+      ))
+      .pipe( rename( function(path) {
+          path.basename += '-' + size +'w-2x';
+      }))
+      .pipe( parallel(
+        imagemin([
+          imageminJpegOptim({
+            max: 50,
+            stripAll: false,
+            stripCom: true,
+            stripExif: true,
+            stripIptc: true,
+            stripXmp: true,
+            stripIcc: false
+          })
+        ]),
+        os.cpus().length
+      ))
+    .pipe(gulp.dest( imagesDestination ))
+  });
+  resizeImageThmbTasks.push(resizeImageThmbHiDPITask);
+});
+gulp.task('resizeImageThmbsHiDPI', resizeImageThmbHiDPITasks);
 
 /**
  * resize for hi density screens
